@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% comment %}
+    Registration page of website
+{% endcomment %}
+
+{% block head %}
+    <title>Sogi | Register</title>
+{% endblock %}
+
+{% block body %}
+    <header>
+        <h1>Sogi</h1>
+        <h2>Register</h2>
+    </header>
+
+    <section>
+        <form action="" method="post">
+        {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Sign up">
+        </form>
+    </section>
+{% endblock %}
+
+

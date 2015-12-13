@@ -5,6 +5,7 @@ from sogi.views import *
 urlpatterns = patterns('',
     (r'^$', main_page),
 
+    (r'^register/$', register),
     (r'^login/$', 'django.contrib.auth.views.login'),
     (r'^logout/$', logout_page),
 
@@ -12,5 +13,6 @@ urlpatterns = patterns('',
 
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': 'static'}),
+        
 )
 
