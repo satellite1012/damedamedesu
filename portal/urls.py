@@ -4,5 +4,6 @@ from portal.views import *
 urlpatterns = patterns('',
 
     (r'^$', portal_main_page),
+    (r'^mysongs/$', my_songs_page),
 
 )
