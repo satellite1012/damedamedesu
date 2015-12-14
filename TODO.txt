@@ -1,0 +1,43 @@
+
+TODO - sogi
+
+
+***********************
+** Website Structure **
+***********************
+
+- No authentication needed
+Main page - quick description and links to login and registration
+Login page
+Registration page
+    - right now just simple user/password
+
+- Authentication needed
+Home page - summary page with links to other pages, notifications
+    - notify when user's turn is active or when user has no more songs in pool for user whose turn it is
+My Songs page - manage song links
+    - each song has fields name, link, user(s) suggested to
+        - can set one or more other group members for each link
+Group page
+    - if turn in progress, person whose turn it is can rate/rank each song and hit finish when done with turn
+        - when turn is over, who suggested which song is revealed and all players see the rankings
+    - if turn not in progress, previous turn's results still show, and someone can hit button to start next turn (perhaps have majority rule on button?)
+History page
+    - show user's song suggestions (name, link, user suggested to, rank, link to that turn's results page)
+    - show list of previous turns and link to each results page
+    
+    
+    
+*********************
+** Database Schema **
+*********************
+
+- User: long id, long gid, string name
+- Group: long id, long list users, string name, string password,
+    int state (0 = nobody's turn, show previous results, nonzero = user with id's turn), long list turn_history
+- Turn: long id, long uid, list of (song id, rank, rating, comment),
+    datetime turn_time
+- Song: long id, long suggester_id, long list suggested_ids,
+    string name, string link_url, datetime time_added
+    
+    
