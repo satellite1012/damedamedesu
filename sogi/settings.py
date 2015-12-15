@@ -2,6 +2,7 @@
 Django settings for sogi project.
 """
 
+import os
 import dj_database_url
 
 DATABASES = {
@@ -22,7 +23,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 
-import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = '/'
 STATIC_URL = '/static/'
