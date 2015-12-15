@@ -9,5 +9,5 @@ from django.conf import settings
 application = Cling(get_wsgi_application())
 
 if not settings.configured:
-    settings.configure()
+    settings.configure(DEBUG=True)
 
