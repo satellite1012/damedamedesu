@@ -11,11 +11,11 @@ DATABASES = {
         'USER': 'test',
         'PASSWORD': 'test',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '',
     }
 }
 
-#DATABASES['default'] = dj_database_url.config(default=os.geten('DATABASE_URL'))
+DATABASES['default'] = dj_database_url.config(default=os.geten('DATABASE_URL'))
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
