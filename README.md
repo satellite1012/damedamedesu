@@ -2,10 +2,13 @@
 # Sogi
 
 
-Steps for development:
+## Steps for development:
 
 Install python and Django on your machine. Also have virtualenv and PostgreSQL set-up (see below if you need help).
 Make sure there is a PostgreSQL user 'test' with password 'test' (no quotes).
+
+If you made changes to the models:
+`python manage.py makemigrations`
 
 Set up the database with:
 `python manage.py migrate`
@@ -15,7 +18,8 @@ Run the following command in a terminal to start app on localhost:
 
 ---
 
-Steps for setting up PostgreSQL on Windows:
+## Steps for setting up PostgreSQL on Windows:
+
 - download and install PostgreSQL at http://www.postgresql.org/download/windows/
 - add PostgreSQL to your path (usually something like C:\Program Files\PostgreSQL\bin)
 - if you have permissions problems, give yourself access by opening pgAdmin
