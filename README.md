@@ -1,21 +1,30 @@
 
 # Sogi
 
-Nothing to see yet.
-
-Login page functional. Registration working.
-
 ---
 
 Steps for development:
 
-Install python and Django on your machine.
+Install python and Django on your machine. Also have virtualenv and PostgreSQL set-up (see below if you need help).
+Make sure there is a PostgreSQL user 'test' with password 'test' (no quotes).
 
 Set up the database with:
-python manage.py syncdb
-(If the db file already exists, you can skip the above step. You can also delete the db file to start from scratch.)
+`python manage.py migrate`
 
 Run the following command in a terminal to start app on localhost:
-python manage.py runserver
+`python manage.py runserver`
 
+---
 
+Steps for setting up PostgreSQL on Windows:
+- download and install PostgreSQL at http://www.postgresql.org/download/windows/
+- add PostgreSQL to your path (usually something like C:\Program Files\PostgreSQL\bin)
+- if you have permissions problems, give yourself access by opening pgAdmin
+    - File -> Open pg_hba.conf -> C:\Program Files\PostgreSQL\9.4\data\ -> Open
+    - double click the first two lines and change Method from 'md5' to 'trust'
+    - save your changes
+- to create a user named test:
+    - run `psql -U postgres -c "CREATE ROLE test LOGIN NOSUPERUSER INHERIT CREATEDB CREATEROLE;"`
+- to create a new database named sogidb:
+    - run `createdb -U postgres sogidb`
+    
