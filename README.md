@@ -1,7 +1,6 @@
 
 # Sogi
 
----
 
 Steps for development:
 
@@ -25,6 +24,8 @@ Steps for setting up PostgreSQL on Windows:
     - save your changes
 - to create a user named test:
     - run `psql -U postgres -c "CREATE ROLE test LOGIN NOSUPERUSER INHERIT CREATEDB CREATEROLE;"`
+- to change a user's password:
+    - run `psql -U postgres -c "ALTER USER test WITH PASSWORD 'test';`
 - to create a new database named sogidb:
     - run `createdb -U postgres sogidb`
     
