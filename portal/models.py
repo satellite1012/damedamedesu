@@ -6,9 +6,7 @@ class Member(models.Model):
         
 class Song(models.Model):
     recommender = models.ForeignKey(
-        Member, 
-        blank=False, 
-        null=False,
+        Member,
         related_name='+',
     )
     suggested_members = models.ManyToManyField(Member)
@@ -17,7 +15,7 @@ class Song(models.Model):
     time_added = models.DateTimeField(auto_now_add=True)
     
 class Turn(models.Model):
-    owner = models.ForeignKey(Member, blank=False, null=False)
+    owner = models.ForeignKey(Member)
     song_list = models.ManyToManyField(
         Song,
         through='Evaluation',

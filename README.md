@@ -33,3 +33,11 @@ Run the following command in a terminal to start app on localhost:
 - to create a new database named sogidb:
     - run `createdb -U postgres sogidb`
     
+---
+
+## Running on Heroku
+
+- check that you've set DJANGO_SETTINGS_MODULE `heroku config:set DJANGO_SETTINGS_MODULE=sogi.settings`
+- set up the dbs like you would locally
+    - `heroku run python manage.py makemigrations`
+    - `heroku run python manage.py migrate`
