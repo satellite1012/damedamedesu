@@ -1,6 +1,19 @@
 
 TODO - sogi
 
+- let's get the basic functionality working first
+    - group home page with placeholders
+    - add song page
+        - form for adding a new song
+            - url, title, dropdown of other group members to suggest to
+    - my songs page
+        - list of songs that have been added
+        - we'll worry about old songs later
+    - add turn functionality to group home page
+        - button to start turn
+        - if not user's turn, show list of song suggestions to gift
+        - if user's turn, show which songs have been gifted already but don't reveal who they're from
+
 
 ***********************
 ** Website Structure **
@@ -18,13 +31,11 @@ Home page - summary page with links to other pages, notifications
 My Songs page - manage song links
     - each song has fields name, link, user(s) suggested to
         - can set one or more other group members for each link
+    - includes songs that were gifted previously, up to 600 total between existing and old songs
 Group page
     - if turn in progress, person whose turn it is can rate/rank each song and hit finish when done with turn
         - when turn is over, who suggested which song is revealed and all players see the rankings
     - if turn not in progress, previous turn's results still show, and someone can hit button to start next turn (perhaps have majority rule on button?)
-History page
-    - show user's song suggestions (name, link, user suggested to, rank, link to that turn's results page)
-    - show list of previous turns and link to each results page
     
     
     
@@ -34,10 +45,10 @@ History page
 
 - User: long id, long gid, string name
 - Group: long id, long list users, string name, string password,
-    int state (0 = nobody's turn, show previous results, nonzero = user with id's turn), long list turn_history
-- Turn: long id, long uid, list of (song id, rank, rating, comment),
-    datetime turn_time
+    int state (0 = nobody's turn, show previous results, nonzero = user with id's turn)
+- Turn: long id, long uid, list of (song id, rank, rating, comment)
+    (will be temporary with our small database constraints)
 - Song: long id, long suggester_id, long list suggested_ids,
-    string name, string link_url, datetime time_added
-    
+    string name, string link_url, datetime time_added,
+    int rank, int rating, string comment, datetime turn_time
     
