@@ -1,9 +1,9 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from portal.views import *
 
-urlpatterns = patterns('',
+urlpatterns = [
 
-    (r'^$', portal_main_page),
-    (r'^mysongs/$', my_songs_page),
+    url(r'^$', portal_main_page),
+    url(r'^mysongs/$', my_songs_page),
 
-)
+]

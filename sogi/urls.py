@@ -1,18 +1,19 @@
 
 from django.conf.urls import *
 from sogi.views import *
+import django.contrib.auth.views
+import django.views.static
 
-urlpatterns = patterns('',
-    (r'^$', main_page),
+urlpatterns = [
+    url(r'^$', main_page),
 
-    (r'^register/$', register),
-    (r'^login/$', 'django.contrib.auth.views.login'),
-    (r'^logout/$', logout_page),
+    url(r'^register/$', register),
+    url(r'^login/$', django.contrib.auth.views.login),
+    url(r'^logout/$', logout_page),
 
-    (r'^portal/', include('portal.urls')),
+    url(r'^portal/', include('portal.urls')),
 
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+    url(r'^static/(?P<path>.*)$', django.views.static.serve,
         {'document_root': 'static'}),
-        
-)
+]
 

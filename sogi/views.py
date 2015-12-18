@@ -2,12 +2,12 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render
 from django.template import RequestContext
 from portal.models import Member
 
 def main_page(request):
-    return render_to_response('index.html', 
+    return render(request, 'index.html',
         context_instance=RequestContext(request))
 
 def logout_page(request):
@@ -29,8 +29,7 @@ def register(request):
             return HttpResponseRedirect("/portal/")
     else:
         form = UserCreationForm()
-    return render(request, "registration/register.html", {
-        'form': form,
-    }, context_instance=RequestContext(request))
+    return render(request, "registration/register.html", 
+        {'form': form}, context_instance=RequestContext(request))
     
     

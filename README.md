@@ -8,7 +8,7 @@ Install python and Django on your machine. Also have virtualenv and PostgreSQL s
 Make sure there is a PostgreSQL user 'test' with password 'test' (no quotes).
 
 If you made changes to the models:
-`python manage.py makemigrations`
+`python manage.py makemigrations`portal
 
 Set up the database with:
 `python manage.py migrate`

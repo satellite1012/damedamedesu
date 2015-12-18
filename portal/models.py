@@ -14,10 +14,10 @@ class Song(models.Model):
     url = models.URLField()
     time_added = models.DateTimeField(auto_now_add=True)
     
-    rank = models.PositiveIntegerField()
-    rating = models.PositiveIntegerField()
-    comment = models.CharField(max_length=2048)
-    turn_time = models.DateTimeField()
+    srank = models.PositiveIntegerField(null=True, blank=True)
+    rating = models.PositiveIntegerField(null=True, blank=True)
+    comment = models.CharField(max_length=2048, null=True, blank=True)
+    turn_time = models.DateTimeField(null=True, blank=True)
     
 class Turn(models.Model):
     owner = models.ForeignKey(Member)
@@ -28,5 +28,5 @@ class Group(models.Model):
     name = models.CharField(max_length=128)
     password = models.CharField(max_length=128)
     turn = models.IntegerField()
-    prev_turn = models.ForeignKey(Turn)    
+    prev_turn = models.ForeignKey(Turn, null=True, blank=True)
     
