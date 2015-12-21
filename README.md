@@ -40,5 +40,5 @@ Run the following command in a terminal to start app on localhost:
 
 - check that you've set DJANGO_SETTINGS_MODULE `heroku config:set DJANGO_SETTINGS_MODULE=sogi.settings`
 - set up the dbs like you would locally
-    - `heroku run python manage.py makemigrations portal`
+    - reset the database in heroku
     - `heroku run python manage.py migrate`
