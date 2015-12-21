@@ -4,7 +4,6 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext
-from portal.models import Member
 
 def main_page(request):
     return render(request, 'index.html',
@@ -25,7 +24,6 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            new_member = Member.objects.create(user=new_user)
             return HttpResponseRedirect("/portal/")
     else:
         form = UserCreationForm()

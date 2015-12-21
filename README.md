@@ -8,7 +8,8 @@ Install python and Django on your machine. Also have virtualenv and PostgreSQL s
 Make sure there is a PostgreSQL user 'test' with password 'test' (no quotes).
 
 If you made changes to the models:
-`python manage.py makemigrations portal`
+`python manage.py makemigrations`
+or `python manage.py makemigrations portal` if the above doesn't work.
 
 Set up the database with:
 `python manage.py migrate`
@@ -39,5 +40,5 @@ Run the following command in a terminal to start app on localhost:
 
 - check that you've set DJANGO_SETTINGS_MODULE `heroku config:set DJANGO_SETTINGS_MODULE=sogi.settings`
 - set up the dbs like you would locally
-    - `heroku run python manage.py makemigrations`
+    - `heroku run python manage.py makemigrations portal`
     - `heroku run python manage.py migrate`

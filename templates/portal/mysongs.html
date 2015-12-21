@@ -4,22 +4,22 @@
 {% endcomment %}
 
 {% block title %}
-    Portal
+    My Songs
 {% endblock %}
 
 {% block content %}
     <section>
         <h2>{{ user.username }}'s Songs</h2>
         <p>This is the my songs page of the web portal.</p>
-        <h3>
-            {% if songs|length > 0 %}
-                {% for song in songs %}
-                <p>{{ song.name }}: {{ song.url }}</p>
-                {% endfor %}
-            {% else %}
-                <p>No songs have been added yet.</p>
-            {% endif %}
-        </h3>
+        <p><a href='addsong/'>Add Song</a></p>
+        <br><br>
+        {% if songs|length > 0 %}
+            {% for song in songs %}
+            <p>{{ song.pk }} | {{ song.name }}: {{ song.url }} <a href='remove/{{ song.pk }}'>Remove</a> </p>
+            {% endfor %}
+        {% else %}
+            <p>No songs have been added yet.</p>
+        {% endif %}
     </section>
     <br>
     <br>
