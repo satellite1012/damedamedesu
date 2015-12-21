@@ -2,19 +2,23 @@
 TODO - sogi
 
 - let's get the basic functionality working first
-    - group home page with placeholders
-    - add song page
+    - add song page (in progress, needs group to complete)
         - form for adding a new song
             - url, title, dropdown of other group members to suggest to
     - my songs page
         - list of songs that have been added
+            - kind of complete? a bit messy looking
         - we'll worry about old songs later
     - add turn functionality to group home page
         - button to start turn
         - if not user's turn, show list of song suggestions to gift
         - if user's turn, show which songs have been gifted already but don't reveal who they're from
 
+- small tasks
+    - make username case insensitive
+    - confirm song removal
 
+    
 ***********************
 ** Website Structure **
 ***********************
@@ -36,7 +40,6 @@ Group page
     - if turn in progress, person whose turn it is can rate/rank each song and hit finish when done with turn
         - when turn is over, who suggested which song is revealed and all players see the rankings
     - if turn not in progress, previous turn's results still show, and someone can hit button to start next turn (perhaps have majority rule on button?)
-    
     
     
 *********************

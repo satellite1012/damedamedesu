@@ -1,0 +1,46 @@
+{% extends "portal/portal.html" %}
+{% comment %}
+    Group page.
+{% endcomment %}
+
+{% block title %}
+    Group
+{% endblock %}
+
+{% block content %}
+    <section>
+        {% if group %}
+            <h2>Group: {{ group.name }}</h2>
+            <h3>Members</h3>
+            {% if group.member_list.all|length > 0 %}
+                {% for mem in group.member_list.all %}
+                    <ul>{{ mem.username }}</ul>
+                {% endfor %}
+                <br><br>
+                
+                {% if group.turn %}
+                    {% if group.turn == user %}
+                        <p>It's your turn.</p>
+                    {% else %}
+                        <p>It's {{ group.turn.username }}'s turn.</p>
+                    {% endif %}
+                {% else %}
+                    <p>It's not anyone's turn.</p>
+                    {% if group.member_list.all|length > 1 %}
+                        <p><a href='/portal/group/{{ group.pk }}/start_turn'>Start turn</a></p>
+                    {% else %}
+                        <p>You need at least two members to song gift!</p>
+                    {% endif %}
+                {% endif %}
+                
+            {% else %}
+                <p>No members in this group!</p>
+            {% endif %}
+        {% else %}
+            <p>This group is not valid.</p>
+        {% endif %}
+    </section>
+    <br>
+    <br>
+{% endblock %}
+

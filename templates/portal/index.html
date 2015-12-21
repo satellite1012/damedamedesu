@@ -11,7 +11,20 @@
     <section>
         <h2>Welcome, {{ user.username }}!</h2>
         <p>This is the main page of the web portal.</p>
-        <p><a href="mysongs">My Songs</a></p>
+        <br>
+        {% if groups|length > 0 %}
+            <h3>Groups</h3>
+            {% for group in groups %}
+                <h4><a href='/portal/group/{{ group.pk }}'>{{ group.name }}</a></h4>
+            {% endfor %}
+        {% else %}
+            <p>You are not in any groups.</p>
+        {% endif %}
+        <br><br>
+        
+        <p><a href='/portal/group/create'>Create</a> or <a href='/portal/group/join'>Join</a> a group.</p>
+            
+        
     </section>
     <br>
     <br>

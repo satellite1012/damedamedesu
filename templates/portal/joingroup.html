@@ -1,0 +1,28 @@
+{% extends "portal/portal.html" %}
+{% comment %}
+    Join a group.
+{% endcomment %}
+
+{% block title %}
+    Join Group
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h2>Join Group</h2>
+        
+        {% if error %}
+            <font color="red"><p>Error: {{ error }}</p></font>
+        {% endif %}
+        
+        <form action="/portal/group/join" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Join Group">
+        </form>
+        
+    </section>
+    <br>
+    <br>
+{% endblock %}
+

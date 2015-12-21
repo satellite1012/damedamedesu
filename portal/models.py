@@ -24,6 +24,8 @@ class Group(models.Model):
     member_list = models.ManyToManyField(User)
     name = models.CharField(max_length=128)
     password = models.CharField(max_length=128)
-    turn = models.IntegerField()
+    turn = models.ForeignKey(
+        User, null=True, blank=True,
+        related_name='+')
     prev_turn = models.ForeignKey(Turn, null=True, blank=True)
     

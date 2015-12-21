@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.template import RequestContext
 
 def main_page(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/portal/')
     return render(request, 'index.html',
         context_instance=RequestContext(request))
 

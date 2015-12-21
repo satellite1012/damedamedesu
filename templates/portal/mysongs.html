@@ -15,7 +15,11 @@
         <br><br>
         {% if songs|length > 0 %}
             {% for song in songs %}
-            <p>{{ song.pk }} | {{ song.name }}: {{ song.url }} <a href='remove/{{ song.pk }}'>Remove</a> </p>
+            <p>
+                <a href='{{ song.url }}'>{{ song.name }}</a> 
+                <br>
+                <a href='remove/{{ song.pk }}'>Remove</a>
+            </p>
             {% endfor %}
         {% else %}
             <p>No songs have been added yet.</p>
