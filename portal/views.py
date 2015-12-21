@@ -125,8 +125,7 @@ def start_turn(request, id):
                         break
         else:
             g.turn = g.member_list.all()[0]
-    return render(request, 'portal/group.html', {'group': g})
-    
-    
+        g.save()
+    return HttpResponseRedirect('/portal/group/' + str(g.id)   )
             
                     
