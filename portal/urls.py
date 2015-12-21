@@ -11,5 +11,7 @@ urlpatterns = [
     url(r'^group/join$', join_group_page),
     url(r'^group/(?P<id>[0-9]*)$', group_page),
     url(r'^group/(?P<id>[0-9]*)/start_turn$', start_turn),
+    url(r'^group/(?P<gid>[0-9]*)/gift$', gift_page),
+    url(r'^group/(?P<gid>[0-9]*)/gift/(?P<sid>[0-9]*)$', gift_song),
     
 ]

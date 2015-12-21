@@ -20,9 +20,28 @@
                 
                 {% if group.turn %}
                     {% if group.turn == user %}
-                        <p>It's your turn.</p>
+                        <h4>It's your turn.</h4>
+                        {% if group.prev_turn.song_list.all|length > 0 %}
+                            {% for song in group.prev_turn.song_list.all %}
+                                <h5>{{ song.name }} | <a href='{{ song.url }}'>Link</a> | Rate/Rank/Comment</h5>
+                            {% endfor %}
+                            {% if group.prev_turn.song_list.all|length|add:"1" == group.member_list.all|length %}
+                                <p>All members have gifted their songs.</p>
+                            {% endif %}
+                        {% else %}
+                            <p>No one has gifted any songs yet.</p>
+                        {% endif %}
                     {% else %}
-                        <p>It's {{ group.turn.username }}'s turn.</p>
+                        <h4>It's {{ group.turn.username }}'s turn.</h4>
+                        {% if songs|length > 0 %}
+                            <p>Some songs you might want to gift:</p>
+                            {% for song in songs %}
+                                <h5><a href='{{ song.url }}'>{{ song.name }}</a> | <a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}'>Gift</a></h5>
+                            {% endfor %}
+                        {% else %}
+                            <p>There are no available songs in your songs list.</p>
+                            <p><a href='/portal/group/{{ group.pk }}/gift'>Gift manually</a></p>
+                        {% endif %}
                     {% endif %}
                 {% else %}
                     <p>It's not anyone's turn.</p>

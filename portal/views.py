@@ -1,3 +1,4 @@
+from datetime import datetime
 from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -108,24 +109,62 @@ def group_page(request, id):
     g = Group.objects.get(pk=id)
     if not g:
         g = None
-    return render(request, 'portal/group.html', {'group': g})
+    s = Song.objects.all().filter(recommender=request.user)
+    return render(request, 'portal/group.html',
+        {'group': g, 'songs': s})
     
 @login_required
 def start_turn(request, id):
     g = Group.objects.get(pk=id)
-    if g:
-        if g.prev_turn:
-            prev = g.prev_turn.owner
-            if g.member_list.all()[-1] == prev:
-                g.turn = g.member_list.all()[0]
-            else:
-                for i in range(g.member_list.all().len):
-                    if g.member_list.all()[i] == prev:
-                        g.turn = g.member_list.all()[i + 1]
-                        break
-        else:
+    if g.prev_turn:
+        prev = g.prev_turn.owner
+        if g.member_list.all()[-1] == prev:
             g.turn = g.member_list.all()[0]
-        g.save()
-    return HttpResponseRedirect('/portal/group/' + str(g.id)   )
+        else:
+            for i in range(g.member_list.all().len):
+                if g.member_list.all()[i] == prev:
+                    g.turn = g.member_list.all()[i + 1]
+                    break
+    else:
+        g.turn = g.member_list.all()[0]
+    if g.prev_turn:
+        g.prev_turn.delete()
+    g.prev_turn = Turn.objects.create(owner=g.turn)
+    g.save()
+    return HttpResponseRedirect('/portal/group/' + str(g.id))
             
-                    
+@login_required
+def gift_page(request, gid):
+    if request.method == 'POST':
+        form = SongForm(request.POST)
+        if form.is_valid():
+            fname = form.cleaned_data['name']
+            furl = form.cleaned_data['url']
+            
+            #could potentially enforce song uniqueness here
+            s = Song.objects.create(name=fname, url=furl,
+                recommender=request.user, turn_time=datetime.now)
+            try:
+                g = Group.objects.get(pk=gid)
+                g.prev_turn.song_list.add(s)
+                g.save()
+            except Group.DoesNotExist:
+                return HttpResponseRedirect('/group/' + str(g.id) + '/gift')
+            
+    else:
+        form = SongForm()
+        
+    return render(request, 'portal/joingroup.html', {'form': form})
+    return render(request, 'portal/giftsong.html',
+        {'group': gid})
+
+@login_required
+def gift_song(request, gid, sid):
+    g = Group.objects.get(pk=gid)
+    s = Song.objects.get(pk=sid)
+    s.turn_time = datetime.now()
+    s.save()
+    g.prev_turn.song_list.add(s)
+    g.save()
+    return HttpResponseRedirect('/portal/group/' + str(g.id))
+    

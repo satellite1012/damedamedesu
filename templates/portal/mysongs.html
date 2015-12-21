@@ -16,9 +16,7 @@
         {% if songs|length > 0 %}
             {% for song in songs %}
             <p>
-                <a href='{{ song.url }}'>{{ song.name }}</a> 
-                <br>
-                <a href='remove/{{ song.pk }}'>Remove</a>
+                <a href='{{ song.url }}'>{{ song.name }}</a> | <a href='remove/{{ song.pk }}'>Remove</a>
             </p>
             {% endfor %}
         {% else %}

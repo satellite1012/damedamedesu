@@ -2,21 +2,15 @@
 TODO - sogi
 
 - let's get the basic functionality working first
-    - add song page (in progress, needs group to complete)
-        - form for adding a new song
-            - url, title, dropdown of other group members to suggest to
-    - my songs page
-        - list of songs that have been added
-            - kind of complete? a bit messy looking
-        - we'll worry about old songs later
+    - add song page
+        - dropdown to select group members
     - add turn functionality to group home page
-        - button to start turn
-        - if not user's turn, show list of song suggestions to gift
-        - if user's turn, show which songs have been gifted already but don't reveal who they're from
+        - rate/rank/comment on songs
 
 - small tasks
     - make username case insensitive
     - confirm song removal
+    - previously gifted songs on mysongs page
 
     
 ***********************
