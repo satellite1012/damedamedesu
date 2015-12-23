@@ -15,7 +15,11 @@
         {% if groups|length > 0 %}
             <h3>Groups</h3>
             {% for group in groups %}
-                <h4><a href='/portal/group/{{ group.pk }}'>{{ group.name }}</a></h4>
+                <ul>
+                    <b>
+                        <a href='/portal/group/{{ group.pk }}'>{{ group.name }}</a>
+                    </b>
+                </ul>
             {% endfor %}
         {% else %}
             <p>You are not in any groups.</p>

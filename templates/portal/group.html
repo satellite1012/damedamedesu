@@ -19,32 +19,90 @@
                 <br><br>
                 
                 {% if group.turn %}
+                
                     {% if group.turn == user %}
                         <h4>It's your turn.</h4>
                         {% if group.prev_turn.song_list.all|length > 0 %}
                             {% for song in group.prev_turn.song_list.all %}
-                                <h5>{{ song.name }} | <a href='{{ song.url }}'>Link</a> | Rate/Rank/Comment</h5>
+                                <p><b>{{ song.name }} | <a href='{{ song.url }}'>Link</a> | <a href='/portal/group/{{ group.pk }}/rate/{{ song.pk }}'>Rate/Rank/Comment</a></b></p>
+                                <ul>
+                                {% if song.rating or song.ranking or song.comment %}
+                                    {% if song.rating %}
+                                        <li>You gave this song a rating of {{ song.rating }}.</li>
+                                    {% endif %}
+                                    {% if song.rank %}
+                                        <li>You gave this song a rank of {{ song.rank }}.</li>
+                                    {% endif %}
+                                    {% if song.comment %}
+                                        <li>Comment: {{ song.comment }}</li>
+                                    {% endif %}
+                                {% else %}
+                                    <li>You have not rated, ranked, or commented on this song yet.</li>
+                                {% endif %}
+                                </ul><br>
                             {% endfor %}
+                            <br>
                             {% if group.prev_turn.song_list.all|length|add:"1" == group.member_list.all|length %}
                                 <p>All members have gifted their songs.</p>
                             {% endif %}
                         {% else %}
                             <p>No one has gifted any songs yet.</p>
                         {% endif %}
+                        <br><br>
+                        <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure?')">End Turn</a>
+                        
                     {% else %}
                         <h4>It's {{ group.turn.username }}'s turn.</h4>
-                        {% if songs|length > 0 %}
-                            <p>Some songs you might want to gift:</p>
-                            {% for song in songs %}
-                                <h5><a href='{{ song.url }}'>{{ song.name }}</a> | <a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}'>Gift</a></h5>
-                            {% endfor %}
+                        {% if gifted %}
+                            <p>You have gifted <a href='{{ gifted.url }}'>{{ gifted.name }}</a>.</p>
                         {% else %}
-                            <p>There are no available songs in your songs list.</p>
-                            <p><a href='/portal/group/{{ group.pk }}/gift'>Gift manually</a></p>
+                            {% if nsongs|length > 0 %}
+                                <p>Some songs you might want to gift:</p>
+                                {% for song in nsongs %}
+                                    <h5><a href='{{ song.url }}'>{{ song.name }}</a> | <a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}'>Gift</a></h5>
+                                {% endfor %}
+                            {% else %}
+                                <p>There are no available songs in your songs list.</p>
+                                <p><a href='/portal/group/{{ group.pk }}/gift'>Gift manually</a></p>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
+                    
                 {% else %}
                     <p>It's not anyone's turn.</p>
+                    {% if group.prev_turn %}
+                        <h3>Last Turn: {{ group.prev_turn.owner.username }}</h3>
+                        {% if group.prev_turn.song_list.all|length > 0 %}
+                            <ul>
+                            {% for song in group.prev_turn.song_list.all %}
+                                <li>
+                                    {{ song.recommender.username }} gifted <a href='{{ song.url }}'>{{ song.name }}</a>
+                                    {% if song.rating or song.rank or song.comment %}
+                                        <ul>
+                                        {% if song.rating %}
+                                            <li>
+                                                Rating: {{ song.rating }}
+                                            </li>
+                                        {% endif %}
+                                        {% if song.rank %}
+                                            <li>
+                                                Rank: {{ song.rank }}
+                                            </li>
+                                        {% endif %}
+                                        {% if song.comment %}
+                                            <li>
+                                                Comment: {{ song.comment }}
+                                            </li>
+                                        {% endif %}
+                                        </ul>
+                                    {% endif %}
+                                    </li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endif %}
+                    <br>
+                    
                     {% if group.member_list.all|length > 1 %}
                         <p><a href='/portal/group/{{ group.pk }}/start_turn'>Start turn</a></p>
                     {% else %}

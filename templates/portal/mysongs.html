@@ -13,14 +13,35 @@
         <p>This is the my songs page of the web portal.</p>
         <p><a href='addsong/'>Add Song</a></p>
         <br><br>
-        {% if songs|length > 0 %}
-            {% for song in songs %}
-            <p>
-                <a href='{{ song.url }}'>{{ song.name }}</a> | <a href='remove/{{ song.pk }}'>Remove</a>
-            </p>
+        <h3>Queue</h3>
+        {% if nsongs|length > 0 %}
+            <ul>
+            {% for song in nsongs %}
+                <li>
+                <a href='{{ song.url }}'>{{ song.name }}</a>
+                <ul><li>
+                    <a href='remove/{{ song.pk }}' onclick="return confirm('Are you sure?')">Remove</a>
+                </li></ul>
+                </li>
             {% endfor %}
+            </ul>
         {% else %}
-            <p>No songs have been added yet.</p>
+            <p>No songs in your queue.</p>
+        {% endif %}
+        <br>
+        {% if osongs|length > 0 %}
+            <h3>Previously Gifted Songs</h3>
+            <ul>
+            {% for song in osongs %}
+                <li>
+                <a href='{{ song.url }}'>{{ song.name }}</a>
+                <ul>
+                    <li>Rater: {{ song.rater.username }}</li>
+                    <li>Rating: {{ song.rating }}</li>
+                    <li>Rank: {{ song.rank }}</li>
+                    <li>Comment: {{ song.comment }}</li>
+                </ul>
+            {% endfor %}
         {% endif %}
     </section>
     <br>

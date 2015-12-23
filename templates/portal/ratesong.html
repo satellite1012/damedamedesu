@@ -1,19 +1,21 @@
 {% extends "portal/portal.html" %}
 {% comment %}
-    Gift song.
+    Rate song.
 {% endcomment %}
 
 {% block title %}
-    Gift Song
+    Rate Song
 {% endblock %}
 
 {% block content %}
     <section>
-        <h2>Gift Song</h2>
-        <form action="/portal/group/{{ group }}/gift" method="post">
+        <h2>Rate Song</h2>
+        <h3>Song: <a href='{{ song.url }}'>{{ song.name }}</a></h3>
+
+        <form action="/portal/group/{{ gid }}/rate/{{ song.pk }}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Gift Song">
+            <input type="submit" value="Rate Song">
         </form>
         
     </section>
