@@ -18,8 +18,11 @@
             <ul>
             {% for song in nsongs %}
             <li>
-                <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> [<a href='remove/{{ song.pk }}' onclick="return confirm('Are you sure?')">Remove this song</a>]
+                <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> [<a href='edit/{{ song.pk }}'>Edit</a>] [<a href='remove/{{ song.pk }}' onclick="return confirm('Are you sure?')">Remove this song</a>]
                 <ul>
+                    <li>
+                        Added on {{ song.time_added }} 
+                    </li>
                     <li>
                         Recommended for:
                         {% if song.suggested_members.all|length > 0 %}
@@ -32,6 +35,7 @@
                             Nobody
                         {% endif %}
                     </li>
+                    <br>
                 </ul>
             </li>
             {% endfor %}

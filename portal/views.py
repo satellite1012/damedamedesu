@@ -28,7 +28,7 @@ def my_songs_page(request):
     them to login page.
     """
     songs = Song.objects.all().filter(recommender=request.user)
-    nsongs = songs.filter(turn_time__isnull=True) #having turn time means gifted already
+    nsongs = songs.filter(turn_time__isnull=True).order_by('time_added').reverse() #having turn time means gifted already
     osongs = songs.filter(turn_time__isnull=False).order_by('turn_time').reverse()
     return render(request, 'portal/mysongs.html',
         {'nsongs': nsongs, 'osongs': osongs},

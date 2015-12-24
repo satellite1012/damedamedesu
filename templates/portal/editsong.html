@@ -10,7 +10,7 @@
 {% block content %}
     <section>
         <h2>Edit Song</h2>
-        <form action="/portal/mysongs/editsong/{{ sid }}" method="post">
+        <form action="/portal/mysongs/edit/{{ sid }}" method="post">
             {% csrf_token %}
             <table>
             {{ form.as_table }}

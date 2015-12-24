@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^$', portal_main_page),
     url(r'^mysongs?/$', my_songs_page),
     url(r'^mysongs/addsong/$', add_song_page),
-    url(r'^mysongs/editsong/(?P<sid>[0-9]*)$', edit_song_page),
+    url(r'^mysongs/edit/(?P<sid>[0-9]*)$', edit_song_page),
     url(r'^mysongs/remove/(?P<sid>[0-9]*)$', remove_song),
     url(r'^group/create/$', create_group_page),
     url(r'^group/join/$', join_group_page),
