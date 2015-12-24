@@ -50,8 +50,12 @@
                         {% endif %}
                         <br><br>
                         
-                        {% if rated %}
+                        {% if rated or group.prev_turn.song_list.all|length == 0 %}
+                        <ul>
+                            <a href='/portal/group/{{ group.pk }}/autogift/' onclick="return confirm('Are you sure?')">Auto Gift</a>
+                            <br><br>         
                             <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure?')">End Turn</a>
+                        </ul>
                         {% else %}
                             You have not rated all songs gifted yet.
                         {% endif %}

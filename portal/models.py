@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
         
 class Song(models.Model):
-    recommender = models.ForeignKey(User, related_name='+')
+    recommender = models.ForeignKey(User, related_name='song_list')
     suggested_members = models.ManyToManyField(User)
     name = models.CharField(max_length=128)
     url = models.URLField()

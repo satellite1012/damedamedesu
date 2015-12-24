@@ -2,7 +2,7 @@
 TODO - sogi
 
     - gift history page and show just ~10 old songs on mysongs page
-    - owner of turn can invoke auto-gift from those who have not gifted yet
+    - menu option with group names maybe?
     
     - key to prevent too many users
     - if >200 old songs (or something), replace

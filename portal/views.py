@@ -296,3 +296,27 @@ def already_heard(request, gid, sid):
         g.save()
         
     return HttpResponseRedirect('/portal/group/' + str(gid))
+
+@login_required
+def auto_gift(request, gid):
+    g = Group.objects.get(pk=gid)
+    
+    if g.turn == request.user:
+        slist = g.prev_turn.song_list.all()
+        for m in g.member_list.all():
+            if m == request.user:
+                continue
+            if g.prev_turn.song_list.all().filter(recommender=m).count() == 0:
+                sl = m.song_list.all().filter(suggested_members=request.user, turn_time__isnull=True)
+                if sl.count() == 0:
+                    continue
+                s = sl.order_by('time_added')[0]
+                s.turn_time = datetime.now()
+                s.save()
+                g.prev_turn.song_list.add(s)
+                g.save()
+    
+    return HttpResponseRedirect('/portal/group/' + str(gid))
+                
+        
+        
