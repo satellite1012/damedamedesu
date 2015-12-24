@@ -14,7 +14,9 @@
             <h3>Members</h3>
             {% if group.member_list.all|length > 0 %}
                 {% for mem in group.member_list.all %}
-                    <ul>{{ mem.username }}</ul>
+                    <ul>
+                        {{ mem.username }} [<a href='/portal/history/gift/{{ mem.pk }}'>Gifting History</a>] [<a href='/portal/history/rate/{{ mem.pk }}'>Rating History</a>]
+                    </ul>
                 {% endfor %}
                 <br><br>
                 

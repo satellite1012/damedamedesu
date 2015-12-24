@@ -13,8 +13,7 @@ def portal_main_page(request):
     """
     If users authenticated, direct them to main page. Otherwise take
     them to login page.
-    """
-    
+    """    
     g = request.user.group_set.all()
     
     return render(request, 'portal/index.html', 
@@ -29,7 +28,7 @@ def my_songs_page(request):
     """
     songs = Song.objects.all().filter(recommender=request.user)
     nsongs = songs.filter(turn_time__isnull=True).order_by('time_added').reverse() #having turn time means gifted already
-    osongs = songs.filter(turn_time__isnull=False).order_by('turn_time').reverse()
+    osongs = songs.filter(turn_time__isnull=False).order_by('turn_time').reverse()[:10]
     return render(request, 'portal/mysongs.html',
         {'nsongs': nsongs, 'osongs': osongs},
         context_instance=RequestContext(request))
@@ -318,5 +317,31 @@ def auto_gift(request, gid):
     
     return HttpResponseRedirect('/portal/group/' + str(gid))
                 
+@login_required
+def gift_history(request, uid):
+    u = User.objects.all().get(pk=uid)
+    songs = Song.objects.all().filter(recommender=u,
+        turn_time__isnull=False)
         
+    return render(request, 'portal/gifthistory.html',
+        {'songs': songs, 'name': u.username},
+        context_instance=RequestContext(request))
+
+@login_required
+def rate_history(request, uid):
+    u = User.objects.all().get(pk=uid)
+    songs = Song.objects.all().filter(rater=u)
+    
+    return render(request, 'portal/ratehistory.html',
+        {'songs': songs, 'name': u.username},
+        context_instance=RequestContext(request))
         
+@login_required
+def self_gift_history(request):
+    return gift_history(request, request.user.pk)
+
+@login_required
+def self_rate_history(request):
+    return rate_history(request, request.user.pk)
+    
+    
