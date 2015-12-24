@@ -1,8 +1,7 @@
 
 TODO - sogi
 
-    - gift history page and show just ~10 old songs on mysongs page
-    - menu option with group names maybe?
+    - alerts for when a turn is active on main page
     
     - key to prevent too many users
     - if >200 old songs (or something), replace

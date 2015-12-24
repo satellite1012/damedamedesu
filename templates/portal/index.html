@@ -10,10 +10,10 @@
 {% block content %}
     <section>
         <h2>Welcome, {{ user.username }}!</h2>
-        <p>This is the main page of the web portal.</p>
+        <p>This is the main page of Sogi, the song gifting web app.</p>
         <br>
         {% if groups|length > 0 %}
-            <h3>Groups</h3>
+            <h3>My Groups</h3>
             {% for group in groups %}
                 <ul>
                     <b>
