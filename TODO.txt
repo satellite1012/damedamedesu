@@ -1,17 +1,16 @@
 
 TODO - sogi
 
-- let's get the basic functionality working first
-    - add song page
-        - dropdown to select group members
-    - add turn functionality to group home page
-        - rate/rank/comment on songs
-
-- small tasks
+    - key to prevent too many users
+    - already-heard functionality
+    - if >200 old songs (or something), replace
+    - add __str__ to all models
+    - clean up menus and formatting (CSS)
+    - clean up security issues
+    
+Too much trouble
     - make username case insensitive
-    - confirm song removal
-    - previously gifted songs on mysongs page
-
+    
     
 ***********************
 ** Website Structure **
@@ -40,12 +39,12 @@ Group page
 ** Database Schema **
 *********************
 
-- User: long id, long gid, string name
-- Group: long id, long list users, string name, string password,
-    int state (0 = nobody's turn, show previous results, nonzero = user with id's turn)
-- Turn: long id, long uid, list of (song id, rank, rating, comment)
+- User: long id, string name
+- Group: long id, User list users, string name, string password,
+    User state (None = nobody's turn)
+- Turn: long id, User owner, list of (song id, rank, rating, comment)
     (will be temporary with our small database constraints)
-- Song: long id, long suggester_id, long list suggested_ids,
-    string name, string link_url, datetime time_added,
+- Song: long id, User recommender, User list suggested,
+    string name, string link_url, datetime time_added, User rater,
     int rank, int rating, string comment, datetime turn_time
     

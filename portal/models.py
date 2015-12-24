@@ -11,7 +11,8 @@ class Song(models.Model):
     rater = models.ForeignKey(User, related_name='+',
         null=True, blank=True)
     rank = models.PositiveIntegerField(null=True, blank=True)
-    rating = models.PositiveIntegerField(null=True, blank=True)
+    rating = models.DecimalField(max_digits=4, decimal_places=2,
+            null=True, blank=True)
     comment = models.CharField(max_length=2048, null=True, blank=True)
     turn_time = models.DateTimeField(null=True, blank=True)
     

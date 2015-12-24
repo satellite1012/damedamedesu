@@ -1,21 +1,21 @@
 {% extends "portal/portal.html" %}
 {% comment %}
-    My songs page of portal.
+    Edit song.
 {% endcomment %}
 
 {% block title %}
-    Add Song
+    Edit Song
 {% endblock %}
 
 {% block content %}
     <section>
-        <h2>Add Song</h2>
-        <form action="/portal/mysongs/addsong/" method="post">
+        <h2>Edit Song</h2>
+        <form action="/portal/mysongs/editsong/{{ sid }}" method="post">
             {% csrf_token %}
             <table>
             {{ form.as_table }}
             </table>
-            <input type="submit" value="Add Song">
+            <input type="submit" value="Update Song">
         </form>
         
     </section>

@@ -17,12 +17,23 @@
         {% if nsongs|length > 0 %}
             <ul>
             {% for song in nsongs %}
-                <li>
-                <a href='{{ song.url }}'>{{ song.name }}</a>
-                <ul><li>
-                    <a href='remove/{{ song.pk }}' onclick="return confirm('Are you sure?')">Remove</a>
-                </li></ul>
-                </li>
+            <li>
+                <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> [<a href='remove/{{ song.pk }}' onclick="return confirm('Are you sure?')">Remove this song</a>]
+                <ul>
+                    <li>
+                        Recommended for:
+                        {% if song.suggested_members.all|length > 0 %}
+                            <ul>
+                                {% for m in song.suggested_members.all %}
+                                    <li>{{ m.username }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            Nobody
+                        {% endif %}
+                    </li>
+                </ul>
+            </li>
             {% endfor %}
             </ul>
         {% else %}
@@ -34,8 +45,9 @@
             <ul>
             {% for song in osongs %}
                 <li>
-                <a href='{{ song.url }}'>{{ song.name }}</a>
+                <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a>
                 <ul>
+                    <li>Turn Time: {{ song.turn_time }}</li>
                     <li>Rater: {{ song.rater.username }}</li>
                     <li>Rating: {{ song.rating }}</li>
                     <li>Rank: {{ song.rank }}</li>

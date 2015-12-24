@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext
 from portal.models import Song, Group, Turn
-from portal.forms import SongForm, GroupForm, RatingForm
+from portal.forms import AddSongForm, SongForm, GroupForm, RatingForm
 
 @login_required
 def portal_main_page(request):
@@ -16,8 +16,6 @@ def portal_main_page(request):
     """
     
     g = request.user.group_set.all()
-    if not g:
-        g = None
     
     return render(request, 'portal/index.html', 
         {'groups': g}, 
@@ -31,28 +29,69 @@ def my_songs_page(request):
     """
     songs = Song.objects.all().filter(recommender=request.user)
     nsongs = songs.filter(turn_time__isnull=True) #having turn time means gifted already
-    osongs = songs.filter(turn_time__isnull=False)
+    osongs = songs.filter(turn_time__isnull=False).order_by('turn_time').reverse()
     return render(request, 'portal/mysongs.html',
         {'nsongs': nsongs, 'osongs': osongs},
         context_instance=RequestContext(request))
     
 @login_required
 def add_song_page(request):
+    glist = request.user.group_set.all()
+    mlist = User.objects.none()
+    for g in glist:
+        mlist = mlist | g.member_list.all().exclude(pk=request.user.pk)
     if request.method == 'POST':
-        form = SongForm(request.POST)
+        form = AddSongForm(request.POST, mlist=mlist)
         if form.is_valid():
             fname = form.cleaned_data['name']
             furl = form.cleaned_data['url']
+            fsug = form.cleaned_data['suggested_members']
             
             s = Song.objects.create(name=fname, url=furl,
                 recommender=request.user)
+            for m in fsug:
+                s.suggested_members.add(m)
+            s.save()
             
             return HttpResponseRedirect('/portal/mysongs/')
             
     else:
-        form = SongForm()
+        form = AddSongForm(mlist=mlist)
         
     return render(request, 'portal/addsong.html', {'form': form})
+    
+@login_required
+def edit_song_page(request, sid):
+    glist = request.user.group_set.all()
+    mlist = User.objects.none()
+    for g in glist:
+        mlist = mlist | g.member_list.all().exclude(pk=request.user.pk)
+    if request.method == 'POST':
+        form = AddSongForm(request.POST, mlist=mlist)
+        if form.is_valid():
+            fname = form.cleaned_data['name']
+            furl = form.cleaned_data['url']
+            fsug = form.cleaned_data['suggested_members']
+            
+            s = Song.objects.get(pk=sid)
+            s.name = fname
+            s.url = furl
+            s.suggested_members.clear()
+            for m in fsug:
+                s.suggested_members.add(m)
+            s.save()
+            
+            return HttpResponseRedirect('/portal/mysongs/')
+            
+    else:
+        s = Song.objects.get(pk=sid)
+        data = {'name': s.name, 'url': s.url}
+        if s.suggested_members.all().count() > 0:
+            data['suggested_members'] = s.suggested_members.all()
+        form = AddSongForm(mlist=mlist, initial=data)
+        
+    return render(request, 'portal/editsong.html', 
+        {'form': form, 'sid': sid})
     
 @login_required
 def remove_song(request, sid):
@@ -113,16 +152,23 @@ def group_page(request, gid):
         s = Song.objects.all().filter(recommender=request.user,
             turn_time__isnull=True)
         if g.turn:
+            s = s.filter(suggested_members=g.turn)
             try:
                 gifted = g.prev_turn.song_list.all().get(recommender=request.user)
             except:
                 gifted = None
+                
+            try: #if there's even one song in list with no rating, not done rating yet
+                rated = g.prev_turn.song_list.all().exclude(rater__isnull=True)
+            except:
+                rated = None
         else:
+            rated = None
             gifted = None
     except Group.DoesNotExist:
         return HttpResponseRedirect('/portal')
     return render(request, 'portal/group.html',
-        {'group': g, 'nsongs': s, 'gifted': gifted})
+        {'group': g, 'nsongs': s, 'gifted': gifted, 'rated': rated})
     
 @login_required
 def gift_page(request, gid):

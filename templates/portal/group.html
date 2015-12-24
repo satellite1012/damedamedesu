@@ -24,9 +24,9 @@
                         <h4>It's your turn.</h4>
                         {% if group.prev_turn.song_list.all|length > 0 %}
                             {% for song in group.prev_turn.song_list.all %}
-                                <p><b>{{ song.name }} | <a href='{{ song.url }}'>Link</a> | <a href='/portal/group/{{ group.pk }}/rate/{{ song.pk }}'>Rate/Rank/Comment</a></b></p>
+                                <p><b>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a> | <a href='/portal/group/{{ group.pk }}/rate/{{ song.pk }}'>Rate/Rank/Comment</a></b></p>
                                 <ul>
-                                {% if song.rating or song.ranking or song.comment %}
+                                {% if song.rater %}
                                     {% if song.rating %}
                                         <li>You gave this song a rating of {{ song.rating }}.</li>
                                     {% endif %}
@@ -49,18 +49,25 @@
                             <p>No one has gifted any songs yet.</p>
                         {% endif %}
                         <br><br>
-                        <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure?')">End Turn</a>
+                        
+                        {% if rated %}
+                            <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure?')">End Turn</a>
+                        {% else %}
+                            You have not rated all songs gifted yet.
+                        {% endif %}
                         
                     {% else %}
                         <h4>It's {{ group.turn.username }}'s turn.</h4>
                         {% if gifted %}
-                            <p>You have gifted <a href='{{ gifted.url }}'>{{ gifted.name }}</a>.</p>
+                            <p>You have gifted <a href='{{ gifted.url }}' target='_blank'>{{ gifted.name }}</a>.</p>
                         {% else %}
                             {% if nsongs|length > 0 %}
                                 <p>Some songs you might want to gift:</p>
+                                <ul>
                                 {% for song in nsongs %}
-                                    <h5><a href='{{ song.url }}'>{{ song.name }}</a> | <a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}'>Gift</a></h5>
+                                    <b><a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> (<a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}' onclick="return confirm('Are you sure?')">Gift</a>)</b><br>
                                 {% endfor %}
+                                </ul>
                             {% else %}
                                 <p>There are no available songs in your songs list.</p>
                                 <p><a href='/portal/group/{{ group.pk }}/gift'>Gift manually</a></p>
@@ -76,7 +83,7 @@
                             <ul>
                             {% for song in group.prev_turn.song_list.all %}
                                 <li>
-                                    {{ song.recommender.username }} gifted <a href='{{ song.url }}'>{{ song.name }}</a>
+                                    {{ song.recommender.username }} gifted <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a>
                                     {% if song.rating or song.rank or song.comment %}
                                         <ul>
                                         {% if song.rating %}
