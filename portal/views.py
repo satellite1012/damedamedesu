@@ -185,9 +185,9 @@ def gift_page(request, gid):
                 g = Group.objects.get(pk=gid)
                 g.prev_turn.song_list.add(s)
                 g.save()
-                return HttpResponseRedirect('/portal/group/' + str(g.id))
+                return HttpResponseRedirect('/portal/group/' + str(gid))
             except Group.DoesNotExist:
-                return HttpResponseRedirect('/portal/group/' + str(g.id) + '/gift')
+                return HttpResponseRedirect('/portal/group/' + str(gid) + '/gift')
             
     else:
         form = SongForm()
@@ -203,7 +203,7 @@ def gift_song(request, gid, sid):
     s.save()
     g.prev_turn.song_list.add(s)
     g.save()
-    return HttpResponseRedirect('/portal/group/' + str(g.id))
+    return HttpResponseRedirect('/portal/group/' + str(gid))
     
 @login_required
 def rate_song(request, gid, sid):    
@@ -233,9 +233,9 @@ def rate_song(request, gid, sid):
                     if scomment:
                         s.comment = scomment
                     s.save()
-                    return HttpResponseRedirect('/portal/group/' + str(g.id))
+                    return HttpResponseRedirect('/portal/group/' + str(gid))
             except Group.DoesNotExist or Song.DoesNotExist:
-                return HttpResponseRedirect('/portal/group/' + str(g.id))
+                return HttpResponseRedirect('/portal/group/' + str(gid))
             
     else:
         try:
@@ -274,12 +274,25 @@ def start_turn(request, gid):
     g.prev_turn = Turn.objects.create(owner=g.turn)
     g.prev_turn.save()  
     g.save()
-    return HttpResponseRedirect('/portal/group/' + str(g.id))
+    return HttpResponseRedirect('/portal/group/' + str(gid))
             
 @login_required
 def end_turn(request, gid):
     g = Group.objects.get(pk=gid)
     g.turn = None
     g.save()
-    return HttpResponseRedirect('/portal/group/' + str(g.id))
+    return HttpResponseRedirect('/portal/group/' + str(gid))
     
+@login_required
+def already_heard(request, gid, sid):
+    g = Group.objects.get(pk=gid)
+    s = Song.objects.get(pk=sid)
+    
+    if g.turn == request.user and s in g.prev_turn.song_list.all():
+        s.comment = 'Heard already'
+        s.rater = request.user
+        s.save()
+        g.prev_turn.song_list.remove(s)
+        g.save()
+        
+    return HttpResponseRedirect('/portal/group/' + str(gid))

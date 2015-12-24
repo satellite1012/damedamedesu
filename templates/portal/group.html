@@ -24,7 +24,7 @@
                         <h4>It's your turn.</h4>
                         {% if group.prev_turn.song_list.all|length > 0 %}
                             {% for song in group.prev_turn.song_list.all %}
-                                <p><b>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a> | <a href='/portal/group/{{ group.pk }}/rate/{{ song.pk }}'>Rate/Rank/Comment</a></b></p>
+                                <p><b>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a> | <a href='/portal/group/{{ group.pk }}/rate/{{ song.pk }}'>Rate/Rank/Comment</a> | <a href='/portal/group/{{ group.pk }}/alreadyheard/{{ song.pk }}' onclick="return confirm('Are you sure?')">Heard already</a></b></p>
                                 <ul>
                                 {% if song.rater %}
                                     {% if song.rating %}

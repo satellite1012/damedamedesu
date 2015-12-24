@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'^group/(?P<gid>[0-9]*)/gift/$', gift_page),
     url(r'^group/(?P<gid>[0-9]*)/gift/(?P<sid>[0-9]*)$', gift_song),
     url(r'^group/(?P<gid>[0-9]*)/rate/(?P<sid>[0-9]*)$', rate_song),
+    url(r'^group/(?P<gid>[0-9]*)/alreadyheard/(?P<sid>[0-9]*)$', 
+        already_heard),
     
 ]

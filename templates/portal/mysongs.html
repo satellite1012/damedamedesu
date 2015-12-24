@@ -18,7 +18,7 @@
             <ul>
             {% for song in nsongs %}
             <li>
-                <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> [<a href='edit/{{ song.pk }}'>Edit</a>] [<a href='remove/{{ song.pk }}' onclick="return confirm('Are you sure?')">Remove this song</a>]
+                <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> [<a href='edit/{{ song.pk }}'>Edit</a>] [<a href='remove/{{ song.pk }}' onclick="return confirm('Are you sure?')">Remove</a>]
                 <ul>
                     <li>
                         Added on {{ song.time_added }} 

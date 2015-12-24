@@ -1,10 +1,13 @@
 
 TODO - sogi
 
+    - gift history page and show just ~10 old songs on mysongs page
+    - owner of turn can invoke auto-gift from those who have not gifted yet
+    
     - key to prevent too many users
-    - already-heard functionality
     - if >200 old songs (or something), replace
     - add __str__ to all models
+    
     - clean up menus and formatting (CSS)
     - clean up security issues
     
