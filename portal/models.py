@@ -16,9 +16,15 @@ class Song(models.Model):
     comment = models.CharField(max_length=2048, null=True, blank=True)
     turn_time = models.DateTimeField(null=True, blank=True)
     
+    def __str__(self):
+        return "Song " + str(name)
+    
 class Turn(models.Model):
     owner = models.ForeignKey(User)
     song_list = models.ManyToManyField(Song)
+    
+    def __str__(self):
+        return "Turn of " + str(owner)
     
 class Group(models.Model):
     member_list = models.ManyToManyField(User)
@@ -29,3 +35,7 @@ class Group(models.Model):
     prev_turn = models.ForeignKey(Turn, on_delete=models.SET_NULL,
         null=True, blank=True)
     
+    def __str__(self):
+        return "Group " + str(name)
+        
+        

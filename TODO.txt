@@ -1,17 +1,15 @@
 
 TODO - sogi
 
+    - leave group button
     - alerts for when a turn is active on main page
-    
-    - key to prevent too many users
-    - if >200 old songs (or something), replace
-    - add __str__ to all models
-    
+        
     - clean up menus and formatting (CSS)
     - clean up security issues
     
 Too much trouble
     - make username case insensitive
+    - key to prevent too many users
     
     
 ***********************

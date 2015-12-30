@@ -10,8 +10,6 @@ urlpatterns = [
     url(r'^mysongs/remove/(?P<sid>[0-9]*)$', remove_song),
     url(r'^history/gift/(?P<uid>[0-9]*)$', gift_history),
     url(r'^history/rate/(?P<uid>[0-9]*)$', rate_history),
-    url(r'^history/gift/self', self_gift_history),
-    url(r'^history/rate/self', self_rate_history),
     url(r'^group/create/$', create_group_page),
     url(r'^group/join/$', join_group_page),
     url(r'^group/(?P<gid>[0-9]*)$', group_page),

@@ -46,6 +46,11 @@ def add_song_page(request):
             furl = form.cleaned_data['url']
             fsug = form.cleaned_data['suggested_members']
             
+            existing = Song.Objects.all().filter(recommender=request.user)
+            if existing.count() >= 600:
+                oldest = existing.filter(turn_time__isnull=False).order_by('turn_time')[0]
+                oldest.delete()
+            
             s = Song.objects.create(name=fname, url=furl,
                 recommender=request.user)
             for m in fsug:
@@ -61,6 +66,14 @@ def add_song_page(request):
     
 @login_required
 def edit_song_page(request, sid):
+    try:
+        # first check that user actually suggested this song
+        s = Song.objects.get(pk=sid)
+        if s.recommender != request.user:
+            return HttpResponseRedirect('/portal/mysongs/')
+    except Song.DoesNotExist:
+        return HttpResponseRedirect('/portal/mysongs/')
+
     glist = request.user.group_set.all()
     mlist = User.objects.none()
     for g in glist:
@@ -72,7 +85,6 @@ def edit_song_page(request, sid):
             furl = form.cleaned_data['url']
             fsug = form.cleaned_data['suggested_members']
             
-            s = Song.objects.get(pk=sid)
             s.name = fname
             s.url = furl
             s.suggested_members.clear()
@@ -83,7 +95,6 @@ def edit_song_page(request, sid):
             return HttpResponseRedirect('/portal/mysongs/')
             
     else:
-        s = Song.objects.get(pk=sid)
         data = {'name': s.name, 'url': s.url}
         if s.suggested_members.all().count() > 0:
             data['suggested_members'] = s.suggested_members.all()
@@ -94,9 +105,12 @@ def edit_song_page(request, sid):
     
 @login_required
 def remove_song(request, sid):
-    s = Song.objects.get(pk=sid)
-    if s:
-        s.delete()
+    try:
+        s = Song.objects.get(pk=sid)
+        if s.recommender == request.user: 
+            s.delete() 
+    except Song.DoesNotExist:
+        return HttpResponseRedirect('/portal/mysongs/')
     return HttpResponseRedirect('/portal/mysongs/')
     
 @login_required
@@ -138,7 +152,6 @@ def join_group_page(request):
             except Group.DoesNotExist:
                 return render(request, 'portal/joingroup.html', 
                     {'form': form, 'error': 'Name/Password incorrect.'})
-            
     else:
         form = GroupForm()
         
@@ -146,31 +159,38 @@ def join_group_page(request):
     
 @login_required
 def group_page(request, gid):
-    try:
-        g = Group.objects.get(pk=gid)
-        s = Song.objects.all().filter(recommender=request.user,
-            turn_time__isnull=True)
-        if g.turn:
-            s = s.filter(suggested_members=g.turn)
-            try:
-                gifted = g.prev_turn.song_list.all().get(recommender=request.user)
-            except:
-                gifted = None
-                
-            try: #if there's even one song in list with no rating, not done rating yet
-                rated = g.prev_turn.song_list.all().exclude(rater__isnull=True)
-            except:
-                rated = None
-        else:
-            rated = None
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
+        
+    s = Song.objects.all().filter(recommender=request.user,
+        turn_time__isnull=True)
+    if g.turn:
+        s = s.filter(suggested_members=g.turn)
+        try:
+            gifted = g.prev_turn.song_list.all().get(recommender=request.user)
+        except:
             gifted = None
-    except Group.DoesNotExist:
-        return HttpResponseRedirect('/portal')
+            
+        try: #if there's even one song in list with no rating, not done rating yet
+            rated = g.prev_turn.song_list.all().exclude(rater__isnull=True)
+        except:
+            rated = None
+    else:
+        rated = None
+        gifted = None
+        
     return render(request, 'portal/group.html',
         {'group': g, 'nsongs': s, 'gifted': gifted, 'rated': rated})
     
 @login_required
 def gift_page(request, gid):
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
+        
     if request.method == 'POST':
         form = SongForm(request.POST)
         if form.is_valid():
@@ -186,8 +206,7 @@ def gift_page(request, gid):
                 g.save()
                 return HttpResponseRedirect('/portal/group/' + str(gid))
             except Group.DoesNotExist:
-                return HttpResponseRedirect('/portal/group/' + str(gid) + '/gift')
-            
+                return HttpResponseRedirect('/portal')
     else:
         form = SongForm()
         
@@ -196,16 +215,38 @@ def gift_page(request, gid):
 
 @login_required
 def gift_song(request, gid, sid):
-    g = Group.objects.get(pk=gid)
-    s = Song.objects.get(pk=sid)
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
+    
+    try:
+        s = Song.objects.get(pk=sid)
+        if s.recommender != request.user: # song doesn't belong to user
+            return HttpResponseRedirect('/portal/group/' + str(gid))
+    except Song.DoesNotExist:
+        return HttpResponseRedirect('/portal/group/' + str(gid))
+    
     s.turn_time = datetime.now()
     s.save()
     g.prev_turn.song_list.add(s)
     g.save()
     return HttpResponseRedirect('/portal/group/' + str(gid))
-    
+            
 @login_required
-def rate_song(request, gid, sid):    
+def rate_song(request, gid, sid):
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
+    
+    try:
+        s = Song.objects.get(pk=sid)
+        if s.recommender != request.user: # song doesn't belong to user
+            return HttpResponseRedirect('/portal/group/' + str(gid))
+    except Song.DoesNotExist:
+        return HttpResponseRedirect('/portal/group/' + str(gid))
+
     if request.method == 'POST':
         form = RatingForm(request.POST)
         if form.is_valid():
@@ -219,10 +260,7 @@ def rate_song(request, gid, sid):
             if 'comment' in form.cleaned_data:
                 scomment = form.cleaned_data['comment']
         
-            try:
-                s = Song.objects.get(pk=sid)
-                g = Group.objects.get(pk=gid)
-                
+            try:                
                 if s in g.prev_turn.song_list.all():
                     s.rater = request.user
                     if srating:
@@ -235,10 +273,8 @@ def rate_song(request, gid, sid):
                     return HttpResponseRedirect('/portal/group/' + str(gid))
             except Group.DoesNotExist or Song.DoesNotExist:
                 return HttpResponseRedirect('/portal/group/' + str(gid))
-            
     else:
         try:
-            s = Song.objects.get(pk=sid)
             data = {}
             if s.rating:
                 data['rating'] = s.rating
@@ -255,7 +291,11 @@ def rate_song(request, gid, sid):
         
 @login_required
 def start_turn(request, gid):
-    g = Group.objects.get(pk=gid)
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
+        
     mlist = g.member_list.order_by('username').all()
     if g.prev_turn:
         prev = g.prev_turn.owner
@@ -277,15 +317,28 @@ def start_turn(request, gid):
             
 @login_required
 def end_turn(request, gid):
-    g = Group.objects.get(pk=gid)
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
+            
     g.turn = None
     g.save()
     return HttpResponseRedirect('/portal/group/' + str(gid))
     
 @login_required
 def already_heard(request, gid, sid):
-    g = Group.objects.get(pk=gid)
-    s = Song.objects.get(pk=sid)
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
+    
+    try:
+        s = Song.objects.get(pk=sid)
+        if s.recommender != request.user: # song doesn't belong to user
+            return HttpResponseRedirect('/portal/group/' + str(gid))
+    except Song.DoesNotExist:
+        return HttpResponseRedirect('/portal/group/' + str(gid))
     
     if g.turn == request.user and s in g.prev_turn.song_list.all():
         s.comment = 'Heard already'
@@ -298,7 +351,10 @@ def already_heard(request, gid, sid):
 
 @login_required
 def auto_gift(request, gid):
-    g = Group.objects.get(pk=gid)
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]
     
     if g.turn == request.user:
         slist = g.prev_turn.song_list.all()
@@ -319,7 +375,13 @@ def auto_gift(request, gid):
                 
 @login_required
 def gift_history(request, uid):
-    u = User.objects.all().get(pk=uid)
+    if not uid:
+        uid = request.user.pk
+    try:
+        u = User.objects.all().get(pk=uid)
+    except User.DoesNotExist:
+        return HttpResponseRedirect('/portal')
+    
     songs = Song.objects.all().filter(recommender=u,
         turn_time__isnull=False)
         
@@ -329,19 +391,17 @@ def gift_history(request, uid):
 
 @login_required
 def rate_history(request, uid):
-    u = User.objects.all().get(pk=uid)
+    if not uid:
+        uid = request.user.pk
+    try:
+        u = User.objects.all().get(pk=uid)
+    except User.DoesNotExist:
+        return HttpResponseRedirect('/portal')
+
     songs = Song.objects.all().filter(rater=u)
     
     return render(request, 'portal/ratehistory.html',
         {'songs': songs, 'name': u.username},
         context_instance=RequestContext(request))
-        
-@login_required
-def self_gift_history(request):
-    return gift_history(request, request.user.pk)
-
-@login_required
-def self_rate_history(request):
-    return rate_history(request, request.user.pk)
     
     

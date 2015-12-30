@@ -11,6 +11,7 @@
     <section>
         {% if group %}
             <h2>Group: {{ group.name }}</h2>
+            <h3>Password: {{ group.password }}</h3>
             <h3>Members</h3>
             {% if group.member_list.all|length > 0 %}
                 {% for mem in group.member_list.all %}
