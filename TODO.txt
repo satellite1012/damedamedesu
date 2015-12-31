@@ -3,9 +3,6 @@ TODO - sogi
 
     - leave group button
     - alerts for when a turn is active on main page
-        
-    - clean up menus and formatting (CSS)
-    - clean up security issues
     
 Too much trouble
     - make username case insensitive

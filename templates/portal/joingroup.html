@@ -15,7 +15,7 @@
             <font color="red"><p>Error: {{ error }}</p></font>
         {% endif %}
         
-        <form action="/portal/group/join" method="post">
+        <form action="/portal/group/join/" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Join Group">

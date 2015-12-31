@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^group/create/$', create_group_page),
     url(r'^group/join/$', join_group_page),
     url(r'^group/(?P<gid>[0-9]*)$', group_page),
+    url(r'^group/(?P<gid>[0-9]*)/leave/$', leave_group),
     url(r'^group/(?P<gid>[0-9]*)/start_turn/$', start_turn),
     url(r'^group/(?P<gid>[0-9]*)/end_turn/$', end_turn),
     url(r'^group/(?P<gid>[0-9]*)/gift/$', gift_page),

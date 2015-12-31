@@ -12,6 +12,7 @@
         {% if group %}
             <h2>Group: {{ group.name }}</h2>
             <h3>Password: {{ group.password }}</h3>
+            [<a href='/portal/group/{{ group.pk }}/leave/' onclick="return confirm('Are you sure you want to leave the group?')">Leave Group</a>]
             <h3>Members</h3>
             {% if group.member_list.all|length > 0 %}
                 {% for mem in group.member_list.all %}
@@ -27,7 +28,7 @@
                         <h4>It's your turn.</h4>
                         {% if group.prev_turn.song_list.all|length > 0 %}
                             {% for song in group.prev_turn.song_list.all %}
-                                <p><b>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a> | <a href='/portal/group/{{ group.pk }}/rate/{{ song.pk }}'>Rate/Rank/Comment</a> | <a href='/portal/group/{{ group.pk }}/alreadyheard/{{ song.pk }}' onclick="return confirm('Are you sure?')">Heard already</a></b></p>
+                                <p><b>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a> | <a href='/portal/group/{{ group.pk }}/rate/{{ song.pk }}'>Rate/Rank/Comment</a> | <a href='/portal/group/{{ group.pk }}/alreadyheard/{{ song.pk }}' onclick="return confirm('Are you sure you want to mark this song as already heard?')">Heard already</a></b></p>
                                 <ul>
                                 {% if song.rater %}
                                     {% if song.rating %}
@@ -55,9 +56,9 @@
                         
                         {% if rated or group.prev_turn.song_list.all|length == 0 %}
                         <ul>
-                            <a href='/portal/group/{{ group.pk }}/autogift/' onclick="return confirm('Are you sure?')">Auto Gift</a>
+                            <a href='/portal/group/{{ group.pk }}/autogift/' onclick="return confirm('Are you sure you want to invoke auto-gift?')">Auto Gift</a>
                             <br><br>         
-                            <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure?')">End Turn</a>
+                            <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure you want to end the turn?')">End Turn</a>
                         </ul>
                         {% else %}
                             You have not rated all songs gifted yet.
@@ -72,7 +73,7 @@
                                 <p>Some songs you might want to gift:</p>
                                 <ul>
                                 {% for song in nsongs %}
-                                    <b><a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> (<a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}' onclick="return confirm('Are you sure?')">Gift</a>)</b><br>
+                                    <b><a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> (<a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}' onclick="return confirm('Are you sure you want to gift this song?')">Gift</a>)</b><br>
                                 {% endfor %}
                                 </ul>
                             {% else %}
@@ -118,7 +119,7 @@
                     <br>
                     
                     {% if group.member_list.all|length > 1 %}
-                        <p><a href='/portal/group/{{ group.pk }}/start_turn'>Start turn</a></p>
+                        <p><a href='/portal/group/{{ group.pk }}/start_turn' onclick="return confirm('Are you sure you want to start the turn?')">Start turn</a></p>
                     {% else %}
                         <p>You need at least two members to song gift!</p>
                     {% endif %}

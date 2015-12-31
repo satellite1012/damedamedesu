@@ -148,7 +148,7 @@ def join_group_page(request):
                 g = Group.objects.get(name=gname, password=gpassword)
                 if g:
                     g.member_list.add(request.user)
-                    return HttpResponseRedirect('/portal/')
+                    return HttpResponseRedirect('/portal')
             except Group.DoesNotExist:
                 return render(request, 'portal/joingroup.html', 
                     {'form': form, 'error': 'Name/Password incorrect.'})
@@ -156,6 +156,15 @@ def join_group_page(request):
         form = GroupForm()
         
     return render(request, 'portal/joingroup.html', {'form': form})
+    
+@login_required
+def leave_group(request, gid):
+    gg = Group.objects.filter(pk=gid, member_list=request.user)
+    if gg.count() == 0:
+        return HttpResponseRedirect('/portal') # not part of group
+    g = gg[0]    
+    g.member_list.remove(request.user)
+    return HttpResponseRedirect('/portal')    
     
 @login_required
 def group_page(request, gid):
