@@ -19,7 +19,7 @@ class GroupForm(forms.Form):
     password = forms.CharField(label='Password', max_length=256)
     
 class RatingForm(forms.Form):
-    rating = forms.IntegerField(label='Rating', min_value=Decimal(1),
+    rating = forms.DecimalField(label='Rating', min_value=Decimal(1),
         max_value=Decimal(10), required=False)
     rank = forms.IntegerField(label='Rank', min_value=1, required=False)
     comment = forms.CharField(label='Comment', max_length=2048,
