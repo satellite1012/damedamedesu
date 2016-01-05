@@ -344,7 +344,7 @@ def already_heard(request, gid, sid):
     
     try:
         s = Song.objects.get(pk=sid)
-        if s.recommender != request.user: # song doesn't belong to user
+        if s not in g.prev_turn.song_list.all(): # song wasn't gifted
             return HttpResponseRedirect('/portal/group/' + str(gid))
     except Song.DoesNotExist:
         return HttpResponseRedirect('/portal/group/' + str(gid))
