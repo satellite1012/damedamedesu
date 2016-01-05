@@ -183,7 +183,7 @@ def group_page(request, gid):
             gifted = None
             
         try: #if there's even one song in list with no rating, not done rating yet
-            rated = g.prev_turn.song_list.all().exclude(rater__isnull=True)
+            rated = g.prev_turn.song_list.all().exclude(rater__isnull=True).order_by('-rating').order_by('rank')
         except:
             rated = None
     else:
