@@ -10,7 +10,7 @@
 {% block content %}
     <section>
         <h2>Gift Song</h2>
-        <form action="/portal/group/{{ group }}/gift" method="post">
+        <form action="/portal/group/{{ group }}/gift/" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Gift Song">
