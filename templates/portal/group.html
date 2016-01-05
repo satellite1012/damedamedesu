@@ -76,6 +76,7 @@
                                     <b><a href='{{ song.url }}' target='_blank'>{{ song.name }}</a> (<a href='/portal/group/{{ group.pk }}/gift/{{ song.pk }}' onclick="return confirm('Are you sure you want to gift this song?')">Gift</a>)</b><br>
                                 {% endfor %}
                                 </ul>
+                                <p><a href='/portal/group/{{ group.pk }}/gift'>Gift manually</a></p>
                             {% else %}
                                 <p>There are no available songs in your songs list.</p>
                                 <p><a href='/portal/group/{{ group.pk }}/gift'>Gift manually</a></p>
