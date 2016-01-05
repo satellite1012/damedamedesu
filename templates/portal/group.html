@@ -90,7 +90,7 @@
                         <h3>Last Turn: {{ group.prev_turn.owner.username }}</h3>
                         {% if group.prev_turn.song_list.all|length > 0 %}
                             <ul>
-                            {% for song in group.prev_turn.song_list.all|dictsort:"rating"|dictsortreversed:"rank" %}
+                            {% for song in group.prev_turn.song_list.all|dictsortreversed:"rating"|dictsort:"rank" %}
                                 <li>
                                     {{ song.recommender.username }} gifted <a href='{{ song.url }}' target='_blank'>{{ song.name }}</a>
                                     {% if song.rating or song.rank or song.comment %}
