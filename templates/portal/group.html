@@ -71,7 +71,7 @@
                             <br>
                             <b>Songs Gifted This Round</b>
                             {% for song in group.prev_turn.song_list.all %}
-                                <p>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a></p>
+                                <p><a href='{{ song.url }}' target='_blank'>{{ song.name }}</a></p>
                             {% endfor %}
                         {% else %}
                             {% if nsongs|length > 0 %}
