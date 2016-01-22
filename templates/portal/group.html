@@ -69,9 +69,9 @@
                         {% if gifted %}
                             <p>You have gifted <a href='{{ gifted.url }}' target='_blank'>{{ gifted.name }}</a>.</p>
                             <br>
-                            Songs Gifted This Round
+                            <b>Songs Gifted This Round</b>
                             {% for song in group.prev_turn.song_list.all %}
-                                <p><b>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a>
+                                <p>{{ song.name }} | <a href='{{ song.url }}' target='_blank'>Link</a></p>
                             {% endfor %}
                         {% else %}
                             {% if nsongs|length > 0 %}
