@@ -50,12 +50,14 @@ def add_song_page(request):
             if existing.count() >= 600:
                 oldest = existing.filter(turn_time__isnull=False).order_by('turn_time')[0]
                 oldest.delete()
-            
-            s = Song.objects.create(name=fname, url=furl,
-                recommender=request.user)
-            for m in fsug:
-                s.suggested_members.add(m)
-            s.save()
+                
+            # check that url hasn't been used already
+            if Song.objects.all().filter(url=furl).count == 0:
+                s = Song.objects.create(name=fname, url=furl,
+                    recommender=request.user)
+                for m in fsug:
+                    s.suggested_members.add(m)
+                s.save()
             
             return HttpResponseRedirect('/portal/mysongs/')
             
