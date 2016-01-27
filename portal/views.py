@@ -52,7 +52,7 @@ def add_song_page(request):
                 oldest.delete()
                 
             # check that url hasn't been used already
-            if Song.objects.all().filter(url=furl).count == 0:
+            if Song.objects.all().filter(url=furl).count() == 0:
                 s = Song.objects.create(name=fname, url=furl,
                     recommender=request.user)
                 for m in fsug:
