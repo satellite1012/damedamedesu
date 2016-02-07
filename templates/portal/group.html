@@ -53,17 +53,21 @@
                             <p>No one has gifted any songs yet.</p>
                         {% endif %}
                         <br><br>
-                        
-                        {% if rated or group.prev_turn.song_list.all|length == 0 %}
+
+                        {% if rated and group.member_list.all|length > group.prev_turn.song_list.all|length|add:"1" %}
                         <ul>
                             <a href='/portal/group/{{ group.pk }}/autogift/' onclick="return confirm('Are you sure you want to invoke auto-gift?')">Auto Gift</a>
-                            <br><br>         
+                            <br><br>
+                            <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure you want to end the turn?')">End Turn</a>
+                        </ul>
+                        {% elif rated or group.prev_turn.song_list.all|length == 0 %}
+                        <ul>
                             <a href='/portal/group/{{ group.pk }}/end_turn' onclick="return confirm('Are you sure you want to end the turn?')">End Turn</a>
                         </ul>
                         {% else %}
-                            You have not rated all songs gifted yet.
+                            <p>You have not rated all songs gifted yet.</p>
                         {% endif %}
-                        
+
                     {% else %}
                         <h4>It's {{ group.turn.username }}'s turn.</h4>
                         {% if gifted %}
