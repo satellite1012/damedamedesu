@@ -394,7 +394,7 @@ def gift_history(request, uid):
         return HttpResponseRedirect('/portal')
     
     songs = Song.objects.all().filter(recommender=u,
-        turn_time__isnull=False).order_by('time_added').all()
+        turn_time__isnull=False).order_by('turn_time').all()
         
     return render(request, 'portal/gifthistory.html',
         {'songs': songs, 'name': u.username},
@@ -409,7 +409,7 @@ def rate_history(request, uid):
     except User.DoesNotExist:
         return HttpResponseRedirect('/portal')
 
-    songs = Song.objects.all().filter(rater=u).order_by('time_added').all()
+    songs = Song.objects.all().filter(rater=u).order_by('turn_time').all()
     
     return render(request, 'portal/ratehistory.html',
         {'songs': songs, 'name': u.username},
