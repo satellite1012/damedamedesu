@@ -14,7 +14,7 @@ def main_page(request):
         
 def data_page(request):
     data = Game.objects.all()
-    return render(request, 'data.html', {d: data},
+    return render(request, 'data.html', {'d': data},
         context_instance=RequestContext(request))
 
 def logout_page(request):
