@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext
-from portal.models import Song, Group, Turn
-from portal.forms import AddSongForm, SongForm, GroupForm, RatingForm
+from portal.models import Game
+from portal.forms import AddGameForm
 
 @login_required
 def portal_main_page(request):
