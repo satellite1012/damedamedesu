@@ -20,7 +20,7 @@ def logout_page(request):
 
 def register(request):
     """
-    allows user to create a sogi account
+    allows user to create a ddd account
     """
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

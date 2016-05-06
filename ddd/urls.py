@@ -1,6 +1,6 @@
 
 from django.conf.urls import *
-from sogi.views import *
+from ddd.views import *
 import django.contrib.auth.views
 import django.views.static
 
