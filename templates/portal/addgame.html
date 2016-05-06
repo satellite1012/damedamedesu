@@ -1,16 +1,16 @@
 {% extends "portal/portal.html" %}
 {% comment %}
-    Add Song page.
+    Add Game page.
 {% endcomment %}
 
 {% block title %}
-    Add Song
+    Add Game
 {% endblock %}
 
 {% block content %}
     <section>
-        <h2>Add Song</h2>
-        <form action="/portal/mysongs/addsong/" method="post">
+        <h2>Add Game</h2>
+        <form action="/portal/addgame/" method="post">
             {% csrf_token %}
             <table>
             {{ form.as_table }}
