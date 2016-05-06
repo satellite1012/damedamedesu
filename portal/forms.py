@@ -8,4 +8,6 @@ class AddGameForm(forms.Form):
     champ3 = forms.CharField(label='Champion 3', max_length=128, required=True)
     champ4 = forms.CharField(label='Champion 4', max_length=128, required=True)
     champ5 = forms.CharField(label='Champion 5', max_length=128, required=True)
+    win = forms.IntegerField(required=True)
+    
     

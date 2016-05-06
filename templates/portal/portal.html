@@ -4,7 +4,7 @@
 {% endcomment %}
 
 {% block head %}
-    <title>Sogi | {% block title %}{% endblock %}</title>
+    <title>Dame Dame Desu | {% block title %}{% endblock %}</title>
 {% endblock %}
 
 {% block body %}
@@ -15,28 +15,15 @@
     <section>
         <ul>
             <a href="/portal/">Home</a><br>
-            <a href="/portal/mysongs/">My Songs</a><br>
-            <a href="/portal/history/gift/">Gift History</a><br>
-            <a href="/portal/history/rate/">Rate History</a><br>
-            <a href="/logout/">Logout</a><br>
+            <a href="/portal/addgame/">Add Game</a><br>
+            s<a href="/logout/">Logout</a><br>
         </ul>
-        
-        {% if user.group_set.all|length > 0 %}
-        <ul>
-            <b>My Groups</b>
-            <br>
-            {% for g in user.group_set.all %}
-            <a href="/portal/group/{{ g.pk }}">{{ g.name }}</a>
-            <br>
-            {% endfor %}
-        </ul>
-        {% endif %}
     </section>
 
     {% block content %}{% endblock %}
 
     <footer>
-        <span>&copy; 2015, Sogi</span>
+        <span>&copy; 2016, Dame Dame Desu</span>
     </footer>
 {% endblock %}
 

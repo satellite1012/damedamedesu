@@ -1,6 +1,6 @@
 {% extends "portal/portal.html" %}
 {% comment %}
-    Main page of sogi.
+    Main page of Dame Dame Desu.
 {% endcomment %}
 
 {% block title %}
@@ -10,24 +10,8 @@
 {% block content %}
     <section>
         <h2>Welcome, {{ user.username }}!</h2>
-        <p>This is the main page of Sogi, the song gifting web app.</p>
-        <br>
-        {% if groups|length > 0 %}
-            <h3>My Groups</h3>
-            {% for group in groups %}
-                <ul>
-                    <b>
-                        <a href='/portal/group/{{ group.pk }}'>{{ group.name }}</a>
-                    </b>
-                </ul>
-            {% endfor %}
-        {% else %}
-            <p>You are not in any groups.</p>
-        {% endif %}
-        <br><br>
-        
-        <p><a href='/portal/group/create'>Create</a> or <a href='/portal/group/join'>Join</a> a group.</p>
-            
+        <p>This is the main page of Dame Dame Desu.</p>
+        <br>            
         
     </section>
     <br>

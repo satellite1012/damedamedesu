@@ -4,4 +4,5 @@ from django.contrib.auth.models import User
 class Game(models.Model):
     day = models.DateField
     champs = models.CharField(max_length=2048) #encoded as name1/name2/name3/name4/name5
+    win = models.IntegerField
     
