@@ -1,0 +1,31 @@
+{% extends "portal/portal.html" %}
+{% comment %}
+    Group details page, including turn details.
+{% endcomment %}
+
+{% block title %}
+    Group
+{% endblock %}
+
+{% block content %}
+    <section>
+        {% if d|length > 0 %}
+            {% for entry in d %}
+                <ul>
+                    Date: {{ entry.day }}<br>
+                    Champions: {{ entry.champs }}<br>
+                    {% if entry.win == 0 %}
+                        WIN
+                    {% else %}
+                        LOSE
+                    {% endif %}
+                    <br>
+                </ul>
+            {% endfor %}
+        {% endif %}
+        
+    </section>
+    <br>
+    <br>
+{% endblock %}
+

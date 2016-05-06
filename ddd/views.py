@@ -10,6 +10,11 @@ def main_page(request):
         return HttpResponseRedirect('/portal/')
     return render(request, 'index.html',
         context_instance=RequestContext(request))
+        
+def data_page(request):
+    data = Game.Object.all()
+    return render(request, 'data.html', {d: data},
+        context_instance=RequestContext(request))
 
 def logout_page(request):
     """

@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^register/$', register),
     url(r'^login/$', django.contrib.auth.views.login),
     url(r'^logout/$', logout_page),
+    url(r'^data/$', data_page),
 
     url(r'^portal/', include('portal.urls')),
 
