@@ -4,6 +4,6 @@ from portal.views import *
 urlpatterns = [
 
     url(r'^$', portal_main_page),
-    url(r'^addsong/$', add_game_page),
+    url(r'^addgame/$', add_game_page),
 
 ]
