@@ -13,7 +13,7 @@ def main_page(request):
         context_instance=RequestContext(request))
         
 def data_page(request):
-    data = Game.Object.all()
+    data = Game.Objects.all()
     return render(request, 'data.html', {d: data},
         context_instance=RequestContext(request))
 
