@@ -1,7 +1,7 @@
 from django import forms
 import datetime
 
-class AddGame(forms.Form):
+class AddGameForm(forms.Form):
     day = forms.DateField(initial=datetime.date.today)
     champ1 = forms.CharField(label='Champion 1', max_length=128, required=True)
     champ2 = forms.CharField(label='Champion 2', max_length=128, required=True)
