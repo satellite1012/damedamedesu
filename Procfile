@@ -1,1 +1,1 @@
-web: gunicorn sogi.wsgi:application
+web: gunicorn ddd.wsgi:application

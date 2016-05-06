@@ -1,41 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-        
-class Song(models.Model):
-    recommender = models.ForeignKey(User, related_name='song_list')
-    suggested_members = models.ManyToManyField(User)
-    name = models.CharField(max_length=128)
-    url = models.URLField()
-    time_added = models.DateTimeField(auto_now_add=True)
+
+class Game(models.Model):
+    day = models.DateField
+    champs = models.CharField(max_length=2048) #encoded as name1/name2/name3/name4/name5
     
-    rater = models.ForeignKey(User, related_name='+',
-        null=True, blank=True)
-    rank = models.PositiveIntegerField(null=True, blank=True)
-    rating = models.DecimalField(max_digits=4, decimal_places=2,
-            null=True, blank=True)
-    comment = models.CharField(max_length=2048, null=True, blank=True)
-    turn_time = models.DateTimeField(null=True, blank=True)
-    
-    def __str__(self):
-        return "Song " + str(name)
-    
-class Turn(models.Model):
-    owner = models.ForeignKey(User)
-    song_list = models.ManyToManyField(Song)
-    
-    def __str__(self):
-        return "Turn of " + str(owner)
-    
-class Group(models.Model):
-    member_list = models.ManyToManyField(User)
-    name = models.CharField(max_length=128)
-    password = models.CharField(max_length=128)
-    turn = models.ForeignKey(User, null=True, blank=True, 
-        related_name='+')
-    prev_turn = models.ForeignKey(Turn, on_delete=models.SET_NULL,
-        null=True, blank=True)
-    
-    def __str__(self):
-        return "Group " + str(name)
-        
-        
