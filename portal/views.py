@@ -22,7 +22,7 @@ def portal_main_page(request):
 @login_required
 def add_game_page(request):
     if request.method == 'POST':
-        form = AddGameForm(request.POST, mlist=mlist)
+        form = AddGameForm(request.POST)
         if form.is_valid():
             fday = form.cleaned_data['day']
             fchamps = "%s/%s/%s/%s/%s" % (form.cleaned_data['champ1'], form.cleaned_data['champ2'], form.cleaned_data['champ3'], form.cleaned_data['champ4'], form.cleaned_data['champ5'])
