@@ -28,8 +28,7 @@ def add_game_page(request):
             fchamps = "%s/%s/%s/%s/%s" % (form.cleaned_data['champ1'], form.cleaned_data['champ2'], form.cleaned_data['champ3'], form.cleaned_data['champ4'], form.cleaned_data['champ5'])
             fwin = form.cleaned_data['win']
                             
-            # check that url hasn't been used already
-            g = Game.objects.create(day=fday, champions=fchamps, win=fwin)
+            g = Game.objects.create(day=fday, champs=fchamps, win=fwin)
             
             return HttpResponseRedirect('/portal/')
             
