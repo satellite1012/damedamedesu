@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext
+from portal.models import Game
 
 def main_page(request):
     if request.user.is_authenticated():
