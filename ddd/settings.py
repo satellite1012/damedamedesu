@@ -1,5 +1,5 @@
 """
-Django settings for sogi project.
+Django settings for ddd project.
 """
 
 import os
@@ -8,7 +8,7 @@ import dj_database_url
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sogidb',
+        'NAME': 'ddddb',
         'USER': 'test',
         'PASSWORD': 'test',
         'HOST': 'localhost',
@@ -61,7 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'sogi.urls'
+ROOT_URLCONF = 'ddd.urls'
 
 TEMPLATES = [
     {
@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sogi.wsgi.application'
+WSGI_APPLICATION = 'ddd.wsgi.application'
 
 
 LANGUAGE_CODE = 'en-us'

@@ -1,8 +1,8 @@
 
-# Sogi
+# Dame Dame Desu
 
 
-## Steps for development:
+## Steps for development (Copied from Sogi):
 
 Install python and Django on your machine. Also have virtualenv and PostgreSQL set-up (see below if you need help).
 Make sure there is a PostgreSQL user 'test' with password 'test' (no quotes).
@@ -38,7 +38,7 @@ Run the following command in a terminal to start app on localhost:
 
 ## Running on Heroku
 
-- check that you've set DJANGO_SETTINGS_MODULE `heroku config:set DJANGO_SETTINGS_MODULE=sogi.settings`
+- check that you've set DJANGO_SETTINGS_MODULE `heroku config:set DJANGO_SETTINGS_MODULE=ddd.settings`
 - set up the dbs like you would locally
     - reset the database in heroku
     - `heroku run python manage.py migrate`

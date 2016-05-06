@@ -1,5 +1,5 @@
 """
-WSGI config for sogi project.
+WSGI config for ddd project.
 """
 
 from django.core.wsgi import get_wsgi_application

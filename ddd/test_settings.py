@@ -1,4 +1,4 @@
-from sogi.settings import *
+from ddd.settings import *
 
 # faster tests with in-memory sqlite3
 SOUTH_TESTS_MIGRATE = False
