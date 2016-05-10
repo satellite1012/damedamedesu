@@ -14,14 +14,14 @@ def main_page(request):
     return render(request, 'index.html',
         context_instance=RequestContext(request))
         
-def thedata_page(request):
+def data_page(request):
 #    data = Game.objects.all()
 #    cdata = {}
 #    for key in champlist:
 #        cdata[key] = data.filter(champs__contains=key).count()
 #    sorteddata = sorted(cdata)#, key=lambda item: item[1], reverse=True)
  
-    return render(request, 'data.html', context_instance=RequestContext(request))
+    return render(request, 'portal/addgame.html', context_instance=RequestContext(request))
 #    return render(request, 'data.html', {'d': data},
 #        context_instance=RequestContext(request))
 
