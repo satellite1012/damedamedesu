@@ -15,14 +15,15 @@ def main_page(request):
         context_instance=RequestContext(request))
         
 def data_page(request):
-    data = Game.objects.all()
+#    data = Game.objects.all()
 #    cdata = {}
 #    for key in champlist:
 #        cdata[key] = data.filter(champs__contains=key).count()
 #    sorteddata = sorted(cdata)#, key=lambda item: item[1], reverse=True)
-    
-    return render(request, 'data.html', {'d': data},
-        context_instance=RequestContext(request))
+ 
+    return render(request, 'data.html', context_instance=RequestContext(request))
+#    return render(request, 'data.html', {'d': data},
+#        context_instance=RequestContext(request))
 
 def logout_page(request):
     """
