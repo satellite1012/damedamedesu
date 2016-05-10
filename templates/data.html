@@ -7,10 +7,9 @@
     Data
 {% endblock %}
 
-{% block content %}
+{% block body %}
     <section>
-        <p>TEST</p>
-<!--        {% if d|length > 0 %}
+        {% if d|length > 0 %}
             {% for name, freq in d.items %}
                 <ul>
                     Name: {{ name }}<br>
@@ -19,7 +18,6 @@
                 </ul>
             {% endfor %}
         {% endif %}
-        -->
     </section>
     <br>
     <br>
