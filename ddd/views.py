@@ -16,10 +16,10 @@ def main_page(request):
         
 def data_page(request):
     data = Game.objects.all()
-    cdata = {}
+    cdata = dict()
     for key in champlist:
         cdata[key] = data.filter(champs__contains=key).count()
-    sorteddata = sorted(cdata.items(), key=lambda x: x[1])
+    sorteddata = sorted(cdata.items(), reverse=True)
  
     return render(request, 'data.html', {'d': sorteddata},
         context_instance=RequestContext(request))
