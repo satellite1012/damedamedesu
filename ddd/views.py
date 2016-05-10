@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.template import RequestContext
 from portal.models import Game
 
+champlist = [ "Annie", "Yasuo", "Zed" ]
+
 def main_page(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/portal/')
@@ -14,9 +16,8 @@ def main_page(request):
         
 def data_page(request):
     data = Game.objects.all()
-    names = data.values_list('champs', flat=True)
     cdata = {}
-    for key in names:
+    for key in champlist:
         cdata[key] = data.filter(champs__contains=key).count()
     sorteddata = sorted(cdata, key=lambda item: item[1], reverse=True)
     
