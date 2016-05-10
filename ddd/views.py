@@ -1,3 +1,4 @@
+import operator
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
@@ -19,7 +20,7 @@ def data_page(request):
     cdata = dict()
     for key in champlist:
         cdata[key] = data.filter(champs__contains=key).count()
-    sorteddata = sorted(cdata.items(), reverse=True)
+    sorteddata = sorted(cdata.items(), key=operator.itegetter(1), reverse=True)
  
     return render(request, 'data.html', {'d': sorteddata},
         context_instance=RequestContext(request))
