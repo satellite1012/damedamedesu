@@ -3,12 +3,17 @@
     Data.
 {% endcomment %}
 
-{% block title %}
-    Data
+{% block head %}
+    <title>Data</title>
 {% endblock %}
 
 {% block body %}
+    <header>
+        <h1>Statistics</h1>
+    </header>
+    
     <section>
+        Here is a list of champions<br>
         {% if d|length > 0 %}
             {% for name, freq in d.items %}
                 <ul>
