@@ -19,7 +19,7 @@ def data_page(request):
     cdata = {}
     for key in champlist:
         cdata[key] = data.filter(champs__contains=key).count()
-    sorteddata = sorted(cdata, key=lambda item: item[1], reverse=True)
+    sorteddata = sorted(cdata, reverse=True)
  
     return render(request, 'data.html', {'d': sorteddata},
         context_instance=RequestContext(request))
