@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from portal.models import Game
     
-#champlist = [ "Annie", "Yasuo", "Zed" ]
+champlist = [ "Annie", "Yasuo", "Zed" ]
     
 def main_page(request):
     if request.user.is_authenticated():
