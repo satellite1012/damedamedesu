@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from portal.models import Game
     
-champlist = [ "Annie", "Yasuo", "Zed" ]
+champlist = [ 'Annie', 'Yasuo', 'Zed' ]
     
 def main_page(request):
     if request.user.is_authenticated():
@@ -19,7 +19,7 @@ def data_page(request):
     cdata = {}
 #    for key in champlist:
 #        cdata[key] = data.filter(champs__contains=key).count()
-    cdata["Yasuo"] = data.filter(champs-contains="Yasuo").count()
+    cdata['Yasuo'] = data.filter(champs-contains='Yasuo').count()
     #sorteddata = sorted(cdata)#, key=lambda item: item[1], reverse=True)
  
     return render(request, 'data.html', {'d': cdata},
