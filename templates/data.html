@@ -14,15 +14,13 @@
     
     <section>
         Here is a list of champions<br>
-        {% if d|length > 0 %}
-            {% for name, freq in d.items %}
-                <ul>
-                    Name: {{ name }}<br>
-                    Games: {{ freq }}<br>
-                    <br>
-                </ul>
-            {% endfor %}
-        {% endif %}
+        {% for name, freq in d.items %}
+            <ul>
+                Name: {{ name }}<br>
+                Games: {{ freq }}<br>
+                <br>
+            </ul>
+        {% endfor %}
     </section>
     <br>
     <br>
