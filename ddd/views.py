@@ -14,8 +14,9 @@ def main_page(request):
         
 def data_page(request):
     data = Game.objects.all()
+    names = data.values_list('champs', flat=True)
     cdata = {}
-    for key in data.keys:
+    for key in names:
         cdata[key] = data.filter(champs__contains=key).count()
     sorteddata = sorted(cdata, key=lambda item: item[1], reverse=True)
     
