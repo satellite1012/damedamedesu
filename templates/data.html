@@ -14,7 +14,7 @@
     
     <section>
         Here is a list of champions<br>
-        {% for name, games, wins in d %}
+        {% for name, (games, wins) in d %}
         <ul>
             Name: {{ name }}<br>
             Games: {{ games }}<br>
