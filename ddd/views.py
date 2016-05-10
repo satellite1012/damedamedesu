@@ -17,9 +17,8 @@ def main_page(request):
 def data_page(request):
     data = Game.objects.all()
     cdata = {}
-#    for key in champlist:
-#        cdata[key] = data.filter(champs__contains=key).count()
-    cdata['Yasuo'] = data.filter(champs__contains='Yasuo').count()
+    for key in champlist:
+        cdata[key] = data.filter(champs__contains=key).count()
     #sorteddata = sorted(cdata)#, key=lambda item: item[1], reverse=True)
  
     return render(request, 'data.html', {'d': cdata},
