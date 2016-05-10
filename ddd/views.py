@@ -14,7 +14,12 @@ def main_page(request):
         
 def data_page(request):
     data = Game.objects.all()
-    return render(request, 'data.html', {'d': data},
+    cdata = {}
+    for key in data.keys:
+        cdata[key] = data.filter(champs__contains=key).count()
+    sorteddata = sorted(cdata, key=lambda item: item[1], reverse=True)
+    
+    return render(request, 'data.html', {'d': sorteddata},
         context_instance=RequestContext(request))
 
 def logout_page(request):

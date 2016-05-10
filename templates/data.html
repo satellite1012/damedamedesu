@@ -1,24 +1,19 @@
-{% extends "portal/portal.html" %}
+{% extends "index.html" %}
 {% comment %}
-    Group details page, including turn details.
+    Data.
 {% endcomment %}
 
 {% block title %}
-    Group
+    Data
 {% endblock %}
 
 {% block content %}
     <section>
         {% if d|length > 0 %}
-            {% for entry in d %}
+            {% for name, freq in d.items %}
                 <ul>
-                    Date: {{ entry.day }}<br>
-                    Champions: {{ entry.champs }}<br>
-                    {% if entry.win == 0 %}
-                        WIN
-                    {% else %}
-                        LOSE
-                    {% endif %}
+                    Name: {{ name }}<br>
+                    Games: {{ freq }}<br>
                     <br>
                 </ul>
             {% endfor %}
