@@ -14,7 +14,7 @@ def main_page(request):
     return render(request, 'index.html',
         context_instance=RequestContext(request))
         
-def data_page(request):
+def thedata_page(request):
 #    data = Game.objects.all()
 #    cdata = {}
 #    for key in champlist:
