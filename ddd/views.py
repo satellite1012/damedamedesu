@@ -29,6 +29,7 @@ def main_page(request):
         
 def data_page_games(request):
     data = Game.objects.all()
+    tgames = Game.objects.count()
     cdata = dict()
     for key in champlist:
         gms = data.filter(champs__contains=key)
@@ -38,7 +39,7 @@ def data_page_games(request):
             cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
-    return render(request, 'data.html', {'d': sorteddata},
+    return render(request, 'data.html', {'d': sorteddata, 'g': tgames},
         context_instance=RequestContext(request))
 
 def data_page_rate(request):
@@ -60,6 +61,7 @@ def data_page_month(request):
     t = date.today()
     start = t - timedelta(days=30)
     data = Game.objects.all().filter(date__range=[start, t])
+    tgames = data.count()
     cdata = dict()
     for key in champlist:
         gms = data.filter(champs__contains=key)
@@ -69,7 +71,7 @@ def data_page_month(request):
             cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
-    return render(request, 'data.html', {'d': sorteddata},
+    return render(request, 'data.html', {'d': sorteddata, 'g': tgames},
         context_instance=RequestContext(request))
 
         
