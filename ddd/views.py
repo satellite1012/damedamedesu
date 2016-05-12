@@ -21,7 +21,8 @@ def data_page_games(request):
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
-        cdata[key] = (gms.count(), wins)
+        rate = 100.0*wins/gms.count()
+        cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
     return render(request, 'data.html', {'d': sorteddata},
@@ -33,8 +34,9 @@ def data_page_rate(request):
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
-        cdata[key] = (gms.count(), wins)
-    sorteddata = sorted(cdata.items(), key=operator.itemgetter(1).1/operator.itemgetter(1).0)
+        rate = 100.0*wins/gms.count()
+        cdata[key] = (gms.count(), wins, rate)
+    sorteddata = sorted(cdata.items(), key=rate)
  
     return render(request, 'data.html', {'d': sorteddata},
         context_instance=RequestContext(request))
@@ -47,7 +49,8 @@ def data_page_month(request):
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
-        cdata[key] = (gms.count(), wins)
+        rate = 100.0*wins/gms.count()
+        cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
     return render(request, 'data.html', {'d': sorteddata},
