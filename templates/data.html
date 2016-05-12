@@ -16,10 +16,7 @@
         Here is a list of champions<br>
         {% for name, gw in d %}
         <ul>
-            Name: {{ name }}<br>
-            Games: {{ gw.0 }}<br>
-            Wins: {{ gw.1 }}<br>
-            <br>
+            {{ name }}: {{ gw.1 }}/{{ gw.0 }} (% widthratio gw.1 gw.0 100 %}<br><br>
         </ul>
         {% endfor %}
     </section>
