@@ -15,7 +15,7 @@
     <section>
         <b>Sort by:</b> <a href="/data/bygames/">Most Games</a> | <a href="/data/byrate/">Win Rate</a> | <a href="/data/pastmonth">Most Games (past month)</a><br><br>
 
-        <table border="1" cellpadding="5" cellspacing="5">
+        <table border="1" cellpadding="5">
         <tr>
         <th>Champion</th>
         <th>Wins/Games</th>
@@ -25,7 +25,15 @@
         <tr>
             <td>{{ name }}</td>
             <td>{{ gw.1 }}/{{ gw.0 }}</td>
-            <td>{{ gw.2|floatformat:2 }}%</td>
+            <td>
+            {% if gw.2 < 30 %} <p style="color:red">
+            {% elif gw.2 < 40 %} <p style="color:orange">
+            {% elif gw.2 < 50% } <p style="color:yellow">
+            {% else % } <p style="color:green">
+            {% endif %}
+            {{ gw.2|floatformat:2 }}%
+            </p>
+            </td>
         </tr>
         {% endfor %}
         </table>
