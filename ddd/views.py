@@ -15,7 +15,7 @@ def main_page(request):
     return render(request, 'index.html',
         context_instance=RequestContext(request))
         
-def data_page(request):
+def data_page_games(request):
     data = Game.objects.all()
     cdata = dict()
     for key in champlist:
@@ -27,6 +27,33 @@ def data_page(request):
     return render(request, 'data.html', {'d': sorteddata},
         context_instance=RequestContext(request))
 
+def data_page_rate(request):
+    data = Game.objects.all()
+    cdata = dict()
+    for key in champlist:
+        gms = data.filter(champs__contains=key)
+        wins = gms.filter(win__gt=0).count()
+        cdata[key] = (gms.count(), wins)
+    sorteddata = sorted(cdata.items(), key=operator.itemgetter(1).1/operator.itemgetter(1).0)
+ 
+    return render(request, 'data.html', {'d': sorteddata},
+        context_instance=RequestContext(request))
+
+def data_page_month(request):
+    t = date.today()
+    start = t - timedelta(days=30)
+    data = Game.objects.all().filter(date__range=[start, t])
+    cdata = dict()
+    for key in champlist:
+        gms = data.filter(champs__contains=key)
+        wins = gms.filter(win__gt=0).count()
+        cdata[key] = (gms.count(), wins)
+    sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
+ 
+    return render(request, 'data.html', {'d': sorteddata},
+        context_instance=RequestContext(request))
+
+        
 def logout_page(request):
     """
     log users out and redirect them to main page.

@@ -13,10 +13,11 @@
     </header>
     
     <section>
-        Here is a list of champions<br>
+        <b>Sort by:</b> <a href="/data/bygames/">Most Games</a> | <a href="/data/byrate/">Win Rate</a> | <a href="/data/monthgames">Most Games (past month)</a><br><br>
+    
         {% for name, gw in d %}
         <ul>
-            {{ name }}: {{ gw.1 }}/{{ gw.0 }} ({% widthratio gw.1 gw.0 100.0 %}%)<br><br>
+            <b>{{ name }}</b>: {{ gw.1 }}/{{ gw.0 }} ({% widthratio gw.1 gw.0 100.0 %}%)<br><br>
         </ul>
         {% endfor %}
     </section>
