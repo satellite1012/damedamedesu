@@ -33,7 +33,10 @@ def data_page_games(request):
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
-        rate = 100.0*wins/gms.count()
+        if gms.count() > 0:
+            rate = 100.0*wins/gms.count()
+        else:
+            rate = 0.00;
         cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
@@ -46,7 +49,10 @@ def data_page_rate(request):
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
-        rate = 100.0*wins/gms.count()
+        if gms.count() > 0:
+            rate = 100.0*wins/gms.count()
+        else:
+            rate = 0.00;
         cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=lambda x: x[1][2])
  
@@ -61,7 +67,10 @@ def data_page_month(request):
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
-        rate = 100.0*wins/gms.count()
+        if gms.count() > 0:
+            rate = 100.0*wins/gms.count()
+        else:
+            rate = 0.00;
         cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
