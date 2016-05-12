@@ -43,6 +43,7 @@ def data_page_games(request):
 
 def data_page_rate(request):
     data = Game.objects.all()
+    tgames = data.count()
     cdata = dict()
     for key in champlist:
         gms = data.filter(champs__contains=key)
@@ -52,7 +53,7 @@ def data_page_rate(request):
             cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=lambda x: x[1][2])
  
-    return render(request, 'data.html', {'d': sorteddata},
+    return render(request, 'data.html', {'d': sorteddata, 'g': tgames},
         context_instance=RequestContext(request))
 
 def data_page_month(request):
