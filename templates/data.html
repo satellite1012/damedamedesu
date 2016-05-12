@@ -14,12 +14,16 @@
     
     <section>
         <b>Sort by:</b> <a href="/data/bygames/">Most Games</a> | <a href="/data/byrate/">Win Rate</a> | <a href="/data/pastmonth">Most Games (past month)</a><br><br>
-    
+
+        <table border="1">
         {% for name, gw in d %}
-        <ul>
-            <b>{{ name }}</b>: {{ gw.1 }}/{{ gw.0 }} ({{ gw.2|floatformat:2 }}%)<br><br>
-        </ul>
+        <tr>
+            <td><b>{{ name }}</b></td>
+            <td>{{ gw.1 }}/{{ gw.0 }}</td>
+            <td>({{ gw.2|floatformat:2 }}%)</td>
+        </tr>
         {% endfor %}
+        </table>
     </section>
     <br>
     <br>
