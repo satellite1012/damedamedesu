@@ -30,7 +30,7 @@ def add_game_page(request):
                             
             g = Game.objects.create(day=fday, champs=fchamps, win=fwin)
             
-            return HttpResponseRedirect('/portal/')
+            return render(request, 'portal/addgame.html', {'form': AddGameForm()})
             
     else:
         form = AddGameForm()
