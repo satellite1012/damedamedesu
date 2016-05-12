@@ -61,7 +61,7 @@ def data_page_rate(request):
 def data_page_month(request):
     t = date.today()
     start = t - timedelta(days=30)
-    data = Game.objects.all().filter(date__range=[start, t])
+    data = Game.objects.all().filter(day__range=[start, t])
     tgames = data.count()
     cdata = dict()
     for key in champlist:
