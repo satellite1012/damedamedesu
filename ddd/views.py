@@ -36,7 +36,7 @@ def data_page_rate(request):
         wins = gms.filter(win__gt=0).count()
         rate = 100.0*wins/gms.count()
         cdata[key] = (gms.count(), wins, rate)
-    sorteddata = sorted(cdata.items(), key=rate)
+    sorteddata = sorted(cdata.items(), key=cdata.items().__getitem__.2)
  
     return render(request, 'data.html', {'d': sorteddata},
         context_instance=RequestContext(request))

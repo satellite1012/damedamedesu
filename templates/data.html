@@ -17,7 +17,7 @@
     
         {% for name, gw in d %}
         <ul>
-            <b>{{ name }}</b>: {{ gw.1 }}/{{ gw.0 }} ({{ gw.2 }}%)<br><br>
+            <b>{{ name }}</b>: {{ gw.1 }}/{{ gw.0 }} ({{ gw.2|floatformat:2 }}%)<br><br>
         </ul>
         {% endfor %}
     </section>
