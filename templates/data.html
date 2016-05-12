@@ -25,14 +25,12 @@
         <tr>
             <td>{{ name }}</td>
             <td>{{ gw.1 }}/{{ gw.0 }}</td>
-            <td>
-            {% if gw.0 > 0 and gw.2 < 30 %} <p style="color:red">
+            <td>{% if gw.0 > 0 and gw.2 < 30 %} <p style="color:red">
             {% elif gw.0 > 0 and gw.2 < 40 %} <p style="color:orange">
             {% elif gw.0 > 0 and gw.2 < 50 %} <p style="color:yellow">
             {% else %} <p style="color:green">
             {% endif %}
-            {{ gw.2|floatformat:2 }}%
-            </p>
+            {{ gw.2|floatformat:2 }}%</p>
             </td>
         </tr>
         {% endfor %}

@@ -35,9 +35,7 @@ def data_page_games(request):
         wins = gms.filter(win__gt=0).count()
         if gms.count() > 0:
             rate = 100.0*wins/gms.count()
-        else:
-            rate = 0.00;
-        cdata[key] = (gms.count(), wins, rate)
+            cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
     return render(request, 'data.html', {'d': sorteddata},
@@ -51,9 +49,7 @@ def data_page_rate(request):
         wins = gms.filter(win__gt=0).count()
         if gms.count() > 0:
             rate = 100.0*wins/gms.count()
-        else:
-            rate = 0.00;
-        cdata[key] = (gms.count(), wins, rate)
+            cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=lambda x: x[1][2])
  
     return render(request, 'data.html', {'d': sorteddata},
@@ -69,9 +65,7 @@ def data_page_month(request):
         wins = gms.filter(win__gt=0).count()
         if gms.count() > 0:
             rate = 100.0*wins/gms.count()
-        else:
-            rate = 0.00;
-        cdata[key] = (gms.count(), wins, rate)
+            cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
     return render(request, 'data.html', {'d': sorteddata},
