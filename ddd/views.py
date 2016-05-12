@@ -43,7 +43,7 @@ def data_page_games(request):
 
 def data_page_rate(request):
     data = Game.objects.all()
-    tgames = data.count()
+    tgames = Game.objects.count()
     cdata = dict()
     for key in champlist:
         gms = data.filter(champs__contains=key)
