@@ -15,7 +15,8 @@
     <section>
         <b>Sort by:</b> <a href="/data/bygames/">Most Games</a> | <a href="/data/byrate/">Win Rate</a> | <a href="/data/pastmonth">Most Games (past month)</a><br><br>
 
-        Total Games: {{ g }}<br><br>
+        Total Games: {{ g }}<br>
+        Overall Win Rate: {{ wr }}<br><br>
         <table border="1" cellpadding="5">
         <tr>
         <th>Champion</th>
@@ -28,7 +29,7 @@
             <td style="text-align:center">{{ gw.1 }}/{{ gw.0 }}</td>
             {% if gw.0 > 0 and gw.2 < 30 %} <td style="color:red; text-align:center">
             {% elif gw.0 > 0 and gw.2 < 40 %} <td style="color:orange; text-align:center">
-            {% elif gw.0 > 0 and gw.2 < 50 %} <td style="color:yellow; text-align:center">
+            {% elif gw.0 > 0 and gw.2 < 50 %} <td>
             {% else %} <td style="color:green; text-align:center">
             {% endif %}
             {{ gw.2|floatformat:2 }}%

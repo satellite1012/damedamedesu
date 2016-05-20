@@ -32,6 +32,8 @@ def data_page_games(request):
     data = Game.objects.all()
     tgames = Game.objects.count()
     cdata = dict()
+    winrate = 1.0*data.filter(win__gt=0).count() / tgames;
+
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
@@ -40,13 +42,14 @@ def data_page_games(request):
             cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
-    return render(request, 'data.html', {'d': sorteddata, 'g': tgames},
-        context_instance=RequestContext(request))
+    return render(request, 'data.html', {'d': sorteddata, 'g': tgames, 'wr': winrate}, context_instance=RequestContext(request))
 
 def data_page_rate(request):
     data = Game.objects.all()
     tgames = Game.objects.count()
     cdata = dict()
+    winrate = 1.0*data.filter(win__gt=0).count() / tgames;
+    
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
@@ -55,8 +58,7 @@ def data_page_rate(request):
             cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=lambda x: x[1][2])
  
-    return render(request, 'data.html', {'d': sorteddata, 'g': tgames},
-        context_instance=RequestContext(request))
+    return render(request, 'data.html', {'d': sorteddata, 'g': tgames, 'wr': winrate}, context_instance=RequestContext(request))
 
 def data_page_month(request):
     t = date.today()
@@ -64,6 +66,8 @@ def data_page_month(request):
     data = Game.objects.all().filter(day__range=[start, t])
     tgames = data.count()
     cdata = dict()
+    winrate = 1.0*data.filter(win__gt=0).count() / tgames;
+
     for key in champlist:
         gms = data.filter(champs__contains=key)
         wins = gms.filter(win__gt=0).count()
@@ -72,8 +76,7 @@ def data_page_month(request):
             cdata[key] = (gms.count(), wins, rate)
     sorteddata = sorted(cdata.items(), key=operator.itemgetter(1), reverse=True)
  
-    return render(request, 'data.html', {'d': sorteddata, 'g': tgames},
-        context_instance=RequestContext(request))
+    return render(request, 'data.html', {'d': sorteddata, 'g': tgames, 'wr': winrate}, context_instance=RequestContext(request))
 
         
 def logout_page(request):
