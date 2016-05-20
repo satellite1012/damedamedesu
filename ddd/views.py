@@ -32,7 +32,7 @@ def data_page_games(request):
     data = Game.objects.all()
     tgames = Game.objects.count()
     cdata = dict()
-    winrate = 1.0*data.filter(win__gt=0).count() / tgames;
+    winrate = 100.0*data.filter(win__gt=0).count() / tgames;
 
     for key in champlist:
         gms = data.filter(champs__contains=key)
@@ -48,7 +48,7 @@ def data_page_rate(request):
     data = Game.objects.all()
     tgames = Game.objects.count()
     cdata = dict()
-    winrate = 1.0*data.filter(win__gt=0).count() / tgames;
+    winrate = 100.0*data.filter(win__gt=0).count() / tgames;
     
     for key in champlist:
         gms = data.filter(champs__contains=key)
@@ -66,7 +66,7 @@ def data_page_month(request):
     data = Game.objects.all().filter(day__range=[start, t])
     tgames = data.count()
     cdata = dict()
-    winrate = 1.0*data.filter(win__gt=0).count() / tgames;
+    winrate = 100.0*data.filter(win__gt=0).count() / tgames;
 
     for key in champlist:
         gms = data.filter(champs__contains=key)
